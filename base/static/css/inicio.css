@@ -1,0 +1,311 @@
+html, body {
+  font-family: Arial, sans-serif;
+  transition: background 0.3s, color 0.3s;
+  height: 100vh; /* Garante que o body ocupe toda a altura da tela */
+  margin: 0;
+  display: flex;
+}
+
+/*Botão do dark e light mode*/
+
+#theme-toggle {
+  display: flex;
+  justify-content: end;
+  align-items: end;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+#theme-icon {
+  width: 32px;
+  height: 32px;
+  fill: currentColor;
+}
+
+.bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+  }
+  
+  @media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+      font-size: 3.5rem;
+    }
+  }
+  
+  .b-example-divider {
+    width: 100%;
+    height: 3rem;
+  }
+  
+  .b-example-vr {
+    flex-shrink: 0;
+    width: 1.5rem;
+    height: 100vh;
+  }
+  
+  .bi {
+    vertical-align: -.125em;
+    fill: currentColor;
+  }
+  
+  .nav-scroller {
+    position: relative;
+    z-index: 2;
+    height: 2.75rem;
+    overflow-y: hidden;
+  }
+  
+  .nav-scroller .nav {
+    display: flex;
+    flex-wrap: nowrap;
+    padding-bottom: 1rem;
+    margin-top: -1px;
+    overflow-x: auto;
+    text-align: center;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+
+  
+  .bd-mode-toggle {
+    z-index: 1500;
+  }
+  
+  .bd-mode-toggle .dropdown-menu .active .bi {
+    display: block !important;
+  }
+  
+  /* Adicionando hover em links */
+  .nav-link {
+    color: #222222;
+  }
+  
+  .nav-link:hover {
+    background-color: #218838; /* Hover verde para os links */
+    color: #222222;
+  }
+  
+  .nav-link.active {
+    background-color: #28a745; /* Cor ativa do link */
+    color: #222222;
+  }
+
+  /* Remove o destaque azul no hover do botão */
+.dropdown-item:focus,
+.dropdown-item:hover {
+    background-color: transparent; /* Cor de fundo do hover */
+    color: #000; /* Cor do texto do hover */
+}
+
+/* Remove a cor de fundo ativa (azul fixo) no botão ativo */
+.dropdown-item.active {
+    background-color: transparent; /* Cor de fundo quando ativo */
+    color: #000; /* Cor do texto ativo */
+}
+
+/* Adicionando um hover com cor personalizada */
+.dropdown-item:hover {
+    background-color: #cfcfcf; /* Cor personalizada no hover */
+    color: #000000; /* Cor do texto no hover */
+}
+
+
+.btn-bd-primary {
+  background: linear-gradient(135deg, #06ef39, #08692f);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn-bd-primary:hover {
+  background: linear-gradient(135deg, #08692f, #06ef39);
+  transform: scale(1.05);
+}
+
+/*Modo noturno e claro*/
+.light-mode {
+  background: white;
+  color: black;
+}
+.dark-mode {
+  background: #121212;
+  color: white;
+}
+.theme-toggle {
+  display: flex;
+  gap: 10px;
+  margin: 20px;
+}
+
+.light-btn {
+  background: #ddd;
+  color: black;
+}
+.dark-btn {
+  background: #333;
+  color: white;
+  width:max-content;
+}
+
+li {
+  display: flex;
+  width: 100%;
+}
+
+/*Estilização do formulário*/
+/* Container principal */
+.form-container {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* Título do formulário */
+.form-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Grupo do input */
+.form-group {
+  text-align: left;
+  margin-bottom: 15px;
+}
+
+/* Rótulo do campo */
+.form-group label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+/* Campo de entrada */
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #28a745;
+  box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
+  outline: none;
+}
+
+/* Botão de envio */
+.btn-submit {
+  width: 100%;
+  padding: 10px;
+  background: linear-gradient(135deg, #28a745, #218838);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-submit:hover {
+  background: linear-gradient(135deg, #218838, #28a745);
+  transform: scale(1.05);
+}
+.container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th, .table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+.table th {
+  background-color: #28a745;
+  color: white;
+}
+
+.table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Estilização dos botões */
+.btn {
+  padding: 8px 12px;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.btn-edit {
+  background: #ffc107;
+  color: white;
+}
+
+.btn-edit:hover {
+  background: #e0a800;
+}
+
+.btn-delete {
+  background: #dc3545;
+  color: white;
+}
+
+.btn-delete:hover {
+  background: #c82333;
+}
+
+.btn-add {
+  display: block;
+  width: max-content;
+  margin: 20px auto;
+  background: #28a745;
+  color: white;
+  padding: 10px 15px;
+  font-size: 16px;
+}
+
+.btn-add:hover {
+  background: #218838;
+}
+
+/* Mensagem de nenhum produto encontrado */
+.no-products {
+  text-align: center;
+  font-size: 18px;
+  color: #666;
+}

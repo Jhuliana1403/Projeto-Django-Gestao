@@ -1,0 +1,69 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: linear-gradient(120deg, #00843D, #6AB04A); /* Verde escuro e verde claro */
+    color: #fff;
+}
+.login-container {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+}
+.login-container h1 {
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+.form-control {
+    margin-bottom: 1rem;
+    text-align: left;
+}
+.form-control label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #333;
+}
+.form-control input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    outline: none;
+}
+.form-control input:focus {
+    border-color: #6AB04A; /* Verde claro */
+}
+.btn {
+    display: inline-block;
+    width: 100%;
+    padding: 0.8rem;
+    border: none;
+    background:rgb(36, 104, 45); 
+    color: #fff;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+.btn:hover {
+    background: #18bd4a; /* Vermelho mais escuro ao passar o mouse */
+}
+.link {
+    margin-top: 1rem;
+    display: block;
+    font-size: 0.9rem;
+    color: #6AB04A;
+    text-decoration: none;
+}
+.link:hover {
+    text-decoration: underline;
+}
