@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+  <div class="container">
+      <h2 class="title">Lista de Coletas</h2>
+      
+      {% if coletas %}
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Produtor</th>
+              <th>Data</th>
+              <th>Quantidade/Litros</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for coleta in coletas %}
+                <tr>
+                    <td>{{ coleta.produtor }}</td>
+                    <td>{{ coleta.data }}</td>
+                    <td>{{ coleta.quantidade_litros }}</td> 
+                    <td>
+                      <a href="{% url 'editar_coleta' coleta.id %}">
+                        <i class="bi bi-pencil"></i> <!-- Ícone de edição -->
+                      </a>
+                      <a href="{% url 'excluir_coleta' coleta.id %}" onclick="return confirm('Tem certeza que deseja excluir?')">
+                        <i class="bi bi-trash"></i>
+                      </a> 
+                    </td>
+                </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <p class="no-products">Nenhuma coleta cadastrada ainda.</p>
+      {% endif %}
+      
+      <a href="{% url 'cadastrar_coleta' %}" class="btn btn-add">+ Adicionar Coleta</a>
+  </div>
+{% endblock %}

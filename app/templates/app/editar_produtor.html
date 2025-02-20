@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+  <div class="form-container">
+      <h2 class="form-title">Editar Produtor</h2>
+      <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="nome">Nome do Produtor:</label>
+          <input type="text" id="nome" name="nome" class="form-control input-large" placeholder="Digite o nome do produtor" required>
+
+          <label for="fazenda">Fazenda:</label>
+          <input type="text" id="fazenda" name="fazenda" class="form-control input-large" placeholder="Digite o nome da fazenda" required>
+
+          <label for="localizacao">Localização:</label>
+          <input type="text" id="localizacao" name="localizacao" class="form-control input-large" placeholder="Digite a localização" required>
+
+          <label for="telefone">Telefone:</label>
+          <input type="text" id="telefone" name="telefone" class="form-control input-large" placeholder="Digite o telefone" required>
+        </div>
+        
+        <button type="submit" class="btn-submit">Salvar Alterações</button>
+      </form>
+  </div>
+{% endblock %}
