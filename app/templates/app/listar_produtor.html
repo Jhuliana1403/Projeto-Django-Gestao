@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+  <h2 class="title">Lista de Produtores</h2>
+  
+  {% if produtores %}
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Status</th>
+          <th>Nome</th>
+          <th>Fazenda</th>
+          <th>Localização</th>
+          <th>Telefone</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for produtor in produtores %}
+            <tr>
+                <td>
+                    <a href="{% url 'alternar_status_produtor' produtor.id %}" class="status-toggle">
+                        {% if produtor.ativo %}
+                            <span class="status-indicator status-active"></span> Ativo
+                        {% else %}
+                            <span class="status-indicator status-inactive"></span> Inativo
+                        {% endif %}
+                    </a>
+                </td>
+                <td>{{ produtor.nome }}</td>
+                <td>{{ produtor.fazenda }}</td>
+                <td>{{ produtor.localizacao }}</td>
+                <td>{{ produtor.telefone }}</td>
+                <td>
+                    <a href="{% url 'editar_produtor' produtor.id %}">
+                        <i class="bi bi-pencil"></i> <!-- Ícone de edição -->
+                    </a>
+                    <a href="{% url 'excluir_produtor' produtor.id %}" onclick="return confirm('Tem certeza que deseja excluir?')">
+                        <i class="bi bi-trash"></i>
+                    </a> 
+                </td>
+            </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p class="no-products">Nenhum produtor cadastrado ainda.</p>
+  {% endif %}
+  
+  <a href="{% url 'cadastrar_produtor' %}" class="btn btn-add">+ Adicionar Produtor</a>
+</div>
+
+<style>
+  .status-indicator {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 8px;
+  }
+
+  .status-active {
+    background-color: green;
+  }
+
+  .status-inactive {
+    background-color: red;
+  }
+
+  .status-toggle {
+    text-decoration: none;
+    color: inherit;
+  }
+</style>
+
+{% endblock %}
