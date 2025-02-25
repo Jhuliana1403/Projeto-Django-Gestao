@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Editar Venda</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <label>Cliente:</label>
+        <select name="cliente">
+            {% for cliente in clientes %}
+                <option value="{{ cliente.id }}" {% if cliente.id == venda.cliente.id %}selected{% endif %}>{{ cliente.nome }}</option>
+            {% endfor %}
+        </select>
+        <label>Quantidade de Litros:</label>
+        <input type="number" name="quantidade_litros" value="{{ venda.quantidade_litros }}" required>
+        <label>Valor Total:</label>
+        <input type="text" name="valor_total" value="{{ venda.valor_total }}" required>
+        <button type="submit">Salvar</button>
+    </form>
+{% endblock %}

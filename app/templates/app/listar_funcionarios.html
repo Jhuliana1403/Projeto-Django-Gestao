@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static "css/funcionario.css" %}">
+<div class="container">
+    <h2 class="title">Funcionários</h2>
+
+    {% if funcionarios %}
+        <div class="funcionarios-grid">
+            {% for funcionario in funcionarios %}
+                <div class="funcionario-card">
+                    <img src="{{ funcionario.imagem.url }}" alt="{{ funcionario.nome }}" class="funcionario-img">
+                    <div class="funcionario-info">
+                        <h3>{{ funcionario.nome }}</h3>
+                        <p>💰 {{ funcionario.salario }}</p>
+                        <p>📌 {{ funcionario.funcao }}</p>
+                        <p>
+                            <a href="{% url 'alternar_status_funcionario' funcionario.id %}" class="status-toggle">
+                                {% if funcionario.ativo %}
+                                    <span class="status-indicator status-active"></span> Ativo
+                                {% else %}
+                                    <span class="status-indicator status-inactive"></span> Inativo
+                                {% endif %}
+                            </a>
+                        </p>
+                        <div class="funcionario-acoes">
+                            <a href="{% url 'editar_funcionario' funcionario.id %}" class="btn-edit">
+                                ✏️ Editar
+                            </a>
+                            <a href="{% url 'excluir_funcionario' funcionario.id %}" onclick="return confirm('Tem certeza que deseja excluir?')" class="btn-delete">
+                                🗑️ Excluir
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>Nenhum funcionário encontrado.</p>
+    {% endif %}
+
+    <a href="{% url 'cadastrar_funcionario' %}" class="btn btn-add">+ Adicionar Funcionário</a>
+</div>
+
+{% endblock %}

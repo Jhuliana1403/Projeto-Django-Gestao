@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path("", views.index, name="index"),
@@ -24,10 +26,35 @@ urlpatterns = [
     path('editar_coleta/<int:coleta_id>/', views.editar_coleta, name='editar_coleta'),
     path('excluir_coleta/<int:coleta_id>/', views.excluir_coleta, name='excluir_coleta'),
 
-    # # Rotas para Colaborador
-    # path("cadastrar_col/", views.cadastrar_colaborador, name="cadastrar_colaborador"),
-    # path("listar_col/", views.listar_colaborador, name="listar_colaborador"),
-    # # path('editar_col/<int:col_id>/', views.editar_colaborador, name='editar_colaborador'),
-    # path('col_desativar/<int:id>/', views.desativar_colaborador, name='desativar_colaborador'),
-    # path('excluir_col/<int:col_id>/', views.excluir_colaborador, name='excluir_colaborador'),
+    # Rotas para Qualidade 
+    path('qualidade_leite/', views.listar_qualidade, name='listar_qualidade'),
+    path('adicionar_qualidade/', views.adicionar_qualidade, name='adicionar_qualidade'),
+    path('editar_qualidade/<int:qualidade_id>/', views.editar_qualidade, name='editar_qualidade'),
+    path('exluir_qualidade/<int:qualidade_id>/', views.excluir_qualidade, name='excluir_qualidade'),
+    path('obter_coletas/', views.obter_coletas, name='obter_coletas'),
+    path('alternar-status_qualidade/<int:qualidade_id>/', views.alternar_status_qualidade, name='alternar_status_qualidade'),
+
+    #Rotas para Pagamento de produtores
+    path('pagamentos/', views.listar_pagamentos, name='listar_pagamentos'),
+    path('cadastrar_pagamentos/', views.cadastrar_pagamento, name='cadastrar_pagamento'),
+    path('editar_pagamentos/<int:pagamento_id>/', views.editar_pagamento, name='editar_pagamento'),
+    path('excluir_pagamentos/<int:pagamento_id>/', views.excluir_pagamento, name='excluir_pagamento'),
+
+    #Rotas para Funcionários
+    path('funcionarios/', views.listar_funcionarios, name="listar_funcionarios"),
+    path('cadastrar_funcionarios/', views.cadastrar_funcionario, name="cadastrar_funcionario"),
+    path('editar_funcionarios/<int:funcionario_id>/', views.editar_funcionario, name="editar_funcionario"),
+    path('alternar_status_funcionarios/<int:funcionario_id>/', views.alternar_status_funcionario, name="alternar_status_funcionario"),
+    path('excluir_funcionarios/<int:funcionario_id>/', views.excluir_funcionario, name="excluir_funcionario"),
+
+    #Rotas para Vendas
+    path('vendas/', views.listar_vendas, name='listar_vendas'),
+    path('cadastrar_venda/', views.cadastrar_venda, name='cadastrar_venda'),
+    path('editar_venda/<int:venda_id>/', views.editar_venda, name='editar_venda'),
+    path('excluir_venda/<int:venda_id>/', views.excluir_venda, name='excluir_venda'),
+    #Dashboard
+    path("dashboard/", views.dashboard, name="dashboard"),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -39,3 +39,5 @@ window.onload = () => {
     loadTheme();
     themeButton.addEventListener("click", toggleTheme);
 };
+
+

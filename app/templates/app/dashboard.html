@@ -1,54 +1,56 @@
-<!DOCTYPE html>
-<html lang="pt">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Fluxo de Caixa</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-        }
-        .container {
-            width: 80%;
-            margin: auto;
-        }
-        canvas {
-            max-width: 600px;
-            margin-top: 20px;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Dashboard - Fluxo de Caixa</h1>
-        <p><strong>Valor Total Produtos:</strong> R$ {{ fluxo.valor_total_produtos }}</p>
-        <p><strong>Valor Total Medicamentos:</strong> R$ {{ fluxo.valor_total_medicamentos }}</p>
-        <p><strong>Diferença Produtos:</strong> R$ {{ fluxo.diferenca_produto }}</p>
-        <p><strong>Diferença Medicamentos:</strong> R$ {{ fluxo.diferenca_medicamento }}</p>
+{% extends "base.html" %}
+{% load static %}
 
-        <canvas id="fluxoChart"></canvas>
+{% block content %}
+<div class="dashboard">
+    <h2 class="text-center mt-4">Fechamento Financeiro - {{ mes_atual }} de {{ ano_atual }}</h2>
+
+    <div class="row mt-4">
+        <!-- Resumo do Mês -->
+        <div class="col-md-4">
+            <div class="card shadow p-3 bg-info text-white">
+                <h4 class="text-center">Resumo Anual:</h4>
+                <p><strong>Salários:</strong> R$ {{ total_salarios|floatformat:2 }}</p>
+                <p><strong>Pagamentos:</strong> R$ {{ total_pagamentos|floatformat:2 }}</p>
+            </div>
+        </div>
+
+        <!-- Comparativo Financeiro -->
+        <div class="row mt-4">
+            <h5 class="text-center">Comparativo Financeiro</h5>
+            <canvas id="graficoFinanceiro"
+                data-salarios="{{ total_salarios }}"
+                data-pagamentos="{{ total_pagamentos }}">
+            </canvas>
+        </div>
     </div>
 
-    <script>
-        var ctx = document.getElementById('fluxoChart').getContext('2d');
-        var fluxoChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Produtos', 'Medicamentos'],
-                datasets: [{
-                    label: 'Valor Total',
-                    data: [{{ valor_total_produtos }}, {{ valor_total_medicamentos }}],
-                    backgroundColor: ['blue', 'green']
-                },
-                {
-                    label: 'Diferença',
-                    data: [{{ diferenca_produto }}, {{ diferenca_medicamento }}],
-                    backgroundColor: ['red', 'orange']
-                }]
-            }
-        });
-    </script>
-</body>
-</html>
+    <!-- Botão para exibir gráfico mensal -->
+    <div class="text-center mt-4">
+        <button id="btnMostrarGraficoMensal" class="btn btn-primary">Mostrar Gráfico Mensal</button>
+    </div>
+
+    <!-- Gráfico de Pagamentos Mensais -->
+    <div class="row mt-4" id="graficoMensalContainer" style="display: none;">
+        <canvas id="graficoMensal"
+            data-meses="{{ meses|join:',' }}"
+            data-valores="{{ valores_mensais|join:',' }}">
+        </canvas>
+    </div>
+
+    <!-- Botão para exibir gráfico de salários -->
+    <div class="text-center mt-4">
+        <button id="btnMostrarGraficoSalarios" class="btn btn-success">Mostrar Gráfico de Salários</button>
+    </div>
+
+    <!-- Gráfico de Salários por Funcionário -->
+    <div class="row mt-4" id="graficoSalariosContainer" style="display: none;">
+        <canvas id="graficoSalarios"
+            data-funcionarios="{{ nomes_funcionarios|join:',' }}"
+            data-salarios="{{ salarios_funcionarios|join:',' }}">
+        </canvas>
+    </div>
+
+</div>
+
+{% endblock %}
