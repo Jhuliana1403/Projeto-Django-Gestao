@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <h2 class="title">Pagamentos</h2>
+    
+    {% if pagamentos %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Produtor</th>
+                    <th>Data</th>
+                    <th>Valor (R$)</th>
+                    <th>Método de Pagamento</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pagamento in pagamentos %}
+                    <tr>
+                        <td>{{ pagamento.produtor.nome }}</td>
+                        <td>{{ pagamento.data_pagamento|default:"Não informado" }}</td>
+                        <td>{{ pagamento.valor }}</td>
+                        <td>{{ pagamento.metodo_pagamento }}</td>
+                        <td>
+                            <a href="{% url 'editar_pagamento' pagamento.id %}">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <a href="{% url 'excluir_pagamento' pagamento.id %}" onclick="return confirm('Tem certeza que deseja excluir?')">
+                                <i class="bi bi-trash"></i>
+                            </a> 
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Nenhum pagamento registrado.</p>
+    {% endif %}
+    
+    <a href="{% url 'cadastrar_pagamento' %}" class="btn btn-add">+ Cadastrar Pagamento</a>
+</div>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+  <div class="form-container">
+      <h2 class="form-title">Cadastrar Pagamento</h2>
+      <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="produtor">Produtor:</label>
+          <select id="produtor" name="produtor" class="form-control input-large" required>
+              <option value="">Selecione um produtor</option>
+              {% for produtor in produtores %}
+                  <option value="{{ produtor.id }}">{{ produtor.nome }}</option>
+              {% endfor %}
+          </select>
+
+          <label for="valor">Valor (R$):</label>
+          <input type="number" id="valor" name="valor" class="form-control input-large" placeholder="Digite o valor do pagamento" step="0.01" required>
+
+          <label for="data_pagamento">Data (R$):</label>
+          <input type="date" id="data_pagamento" name="data_pagamento" class="form-control input-large" placeholder="Digite o valor do pagamento" step="0.01" required>
+
+          <label for="metodo_pagamento">Método de Pagamento:</label>
+          <select id="metodo_pagamento" name="metodo_pagamento" class="form-control input-large" required>
+              <option value="">Selecione o método de pagamento</option>
+              <option value="Transferência">Transferência</option>
+              <option value="Boleto">Boleto</option>
+              <option value="Cartão de Crédito">Cartão de Crédito</option>
+          </select>
+        </div>
+        
+        <button type="submit" class="btn-submit">Cadastrar Pagamento</button>
+      </form>
+  </div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+  <div class="form-container">
+      <h2 class="form-title">Editar Funcionário</h2>
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="imagem">Foto Atual:</label><br>
+            <img src="{{ funcionario.imagem.url }}" alt="Foto de {{ funcionario.nome }}" class="img-thumbnail" width="100">
+            
+            <label for="imagem">Alterar Foto:</label>
+            <input type="file" id="imagem" name="imagem" class="form-control input-large">
+
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome" class="form-control input-large" value="{{ funcionario.nome }}" required>
+
+            <label for="salario">Salário (R$):</label>
+            <input type="number" id="salario" name="salario" class="form-control input-large" value="{{ funcionario.salario }}" step="0.01" required>
+
+            <label for="funcao">Função:</label>
+            <input type="text" id="funcao" name="funcao" class="form-control input-large" value="{{ funcionario.funcao }}" required>
+
+            <label for="status">Status:</label>
+            <select id="status" name="status" class="form-control input-large" required>
+                <option value="Ativo" {% if funcionario.ativo %}selected{% endif %}>Ativo</option>
+                <option value="Inativo" {% if not funcionario.ativo %}selected{% endif %}>Inativo</option>
+            </select>
+        </div>
+        
+        <button type="submit" class="btn-submit">Salvar Alterações</button>
+      </form>
+  </div>
+{% endblock %}

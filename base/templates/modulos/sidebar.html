@@ -27,8 +27,7 @@
 
 <body>
 
-    <div class="d-flex flex-column flex-shrink-0 p-3 rounded shadow position-relative" 
-    style="width: 250px; background-color: #4CAF50; color: white; position: relative;">
+    <div class="sidebar">
            <img src="{% static 'img/logo.png' %}" alt="Logo" width="200" height="80" class="logo">
         <hr>
         <a href="#" class="d-flex align-items-center text-white text-decoration-none" data-bs-toggle="dropdown" aria-expanded="false">
@@ -37,10 +36,10 @@
         </a>
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">
-            <li class="nav-item">
-                <a href="#" class="nav-link text-white" aria-current="page">
-                    <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"/></svg>
-                    Início
+            <li>
+                <a href="{% url "dashboard" %}" class="nav-link text-white">
+                    <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#produtos"/></svg>
+                    Produtores
                 </a>
             </li>
             <li>
@@ -62,15 +61,27 @@
                 </a>
             </li>
             <li>
-                <a href="#" class="nav-link text-white">
+                <a href="{% url "listar_qualidade" %}" class="nav-link text-white">
                     <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#fornecedores"/></svg>
-                    Fornecedores
+                    Qualidade do Leite
                 </a>
             </li>
             <li>
-                <a href="#" class="nav-link text-white">
-                    <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#dashboard"/></svg>
-                    Dashboard
+                <a href="{% url "listar_pagamentos" %}" class="nav-link text-white">
+                    <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#"/></svg>
+                    Pagamentos
+                </a>
+            </li>
+            <li>
+                <a href="{% url "listar_funcionarios" %}" class="nav-link text-white">
+                    <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#"/></svg>
+                    Funcionários
+                </a>
+            </li>
+            <li>
+                <a href="{% url "listar_vendas" %}" class="nav-link text-white">
+                    <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#"/></svg>
+                    Vendas
                 </a>
             </li>
             <li>
