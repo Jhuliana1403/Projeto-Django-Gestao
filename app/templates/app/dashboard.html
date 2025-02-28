@@ -2,55 +2,53 @@
 {% load static %}
 
 {% block content %}
-<div class="dashboard">
+<div class="container-fluid">
     <h2 class="text-center mt-4">Fechamento Financeiro - {{ mes_atual }} de {{ ano_atual }}</h2>
 
     <div class="row mt-4">
         <!-- Resumo do Mês -->
         <div class="col-md-4">
             <div class="card shadow p-3 bg-info text-white">
-                <h4 class="text-center">Resumo Anual:</h4>
+                <h4 class="text-center">Resumo Anual</h4>
                 <p><strong>Salários:</strong> R$ {{ total_salarios|floatformat:2 }}</p>
                 <p><strong>Pagamentos:</strong> R$ {{ total_pagamentos|floatformat:2 }}</p>
             </div>
         </div>
 
-        <!-- Comparativo Financeiro -->
-        <div class="row mt-4">
-            <h5 class="text-center">Comparativo Financeiro</h5>
-            <canvas id="graficoFinanceiro"
-                data-salarios="{{ total_salarios }}"
-                data-pagamentos="{{ total_pagamentos }}">
-            </canvas>
+        <!-- Gráfico Comparativo Financeiro -->
+        <div class="col-md-8">
+            <div class="card shadow p-3">
+                <h5 class="text-center">Comparativo Financeiro</h5>
+                <canvas id="graficoFinanceiro"
+                    data-salarios="{{ total_salarios }}"
+                    data-pagamentos="{{ total_pagamentos }}">
+                </canvas>
+            </div>
         </div>
     </div>
 
-    <!-- Botão para exibir gráfico mensal -->
-    <div class="text-center mt-4">
-        <button id="btnMostrarGraficoMensal" class="btn btn-primary">Mostrar Gráfico Mensal</button>
-    </div>
+    <div class="row mt-4">
+        <!-- Gráfico de Pagamentos Mensais -->
+        <div class="col-md-6">
+            <div class="card shadow p-3">
+                <h5 class="text-center">Pagamentos Mensais</h5>
+                <canvas id="graficoMensal"
+                    data-meses="{{ meses|join:',' }}"
+                    data-valores="{{ valores_mensais|join:',' }}">
+                </canvas>
+            </div>
+        </div>
 
-    <!-- Gráfico de Pagamentos Mensais -->
-    <div class="row mt-4" id="graficoMensalContainer" style="display: none;">
-        <canvas id="graficoMensal"
-            data-meses="{{ meses|join:',' }}"
-            data-valores="{{ valores_mensais|join:',' }}">
-        </canvas>
+        <!-- Gráfico de Salários por Funcionário -->
+        <div class="col-md-6">
+            <div class="card shadow p-3">
+                <h5 class="text-center">Salários por Funcionário</h5>
+                <canvas id="graficoSalarios"
+                    data-funcionarios="{{ nomes_funcionarios|join:',' }}"
+                    data-salarios="{{ salarios_funcionarios|join:',' }}">
+                </canvas>
+            </div>
+        </div>
     </div>
-
-    <!-- Botão para exibir gráfico de salários -->
-    <div class="text-center mt-4">
-        <button id="btnMostrarGraficoSalarios" class="btn btn-success">Mostrar Gráfico de Salários</button>
-    </div>
-
-    <!-- Gráfico de Salários por Funcionário -->
-    <div class="row mt-4" id="graficoSalariosContainer" style="display: none;">
-        <canvas id="graficoSalarios"
-            data-funcionarios="{{ nomes_funcionarios|join:',' }}"
-            data-salarios="{{ salarios_funcionarios|join:',' }}">
-        </canvas>
-    </div>
-
 </div>
-
 {% endblock %}

@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Produtor, Cliente, Coleta, Qualidade, Pagamento, Funcionario, Venda
-from datetime import datetime
+import datetime
 from django.core.files.storage import default_storage
 
 #Importando para realizar os gráficos
 from datetime import datetime
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.db.models.functions import TruncMonth, TruncYear
 from django.db.models import Sum
 
@@ -38,18 +38,21 @@ def excluir_produtor(request, produtor_id):
 
 
 def editar_produtor(request, produtor_id):
-    produtor = get_object_or_404(Produtor, id=produtor_id)
-
+    produtor = Produtor.objects.get(id=produtor_id)
+    
     if request.method == 'POST':
-        produtor.nome = request.POST.get('nome', '').strip()
-        produtor.fazenda = request.POST.get('fazenda', '').strip()
-        produtor.localizacao = request.POST.get('localizacao', '').strip()
-        produtor.telefone = request.POST.get('telefone', '').strip()
-
+        # Atualiza os dados do produtor
+        produtor.nome = request.POST['nome']
+        produtor.fazenda = request.POST['fazenda']
+        produtor.localizacao = request.POST['localizacao']
+        produtor.telefone = request.POST['telefone']
         produtor.save()
-        return redirect('listar_produtor')
-
-    return render(request, 'app/editar_produtor.html', {'produtor': produtor})
+        return redirect('sucesso')  # Redireciona após salvar, por exemplo
+    
+    # Se for GET, passa os valores atuais para o formulário
+    return render(request, 'app/editar_produtor.html', {
+        'produtor': produtor
+    })
 
 
 def alternar_status_produtor(request, produtor_id):
@@ -83,17 +86,20 @@ def excluir_cliente(request, cliente_id):
 
 
 def editar_cliente(request, cliente_id):
-    clientes = get_object_or_404(Cliente, id=cliente_id)
-
+    cliente = Cliente.objects.get(id=cliente_id)
+    
     if request.method == 'POST':
-        clientes.nome = request.POST.get('nome', '').strip()
-        clientes.endereco = request.POST.get('endereco', '').strip()
-        clientes.contato = request.POST.get('contato', '').strip()
-
-        clientes.save()
-        return redirect('listar_cliente')
-
-    return render(request, 'app/editar_cliente.html', {'clientes': clientes})
+        # Atualiza os dados do cliente
+        cliente.nome = request.POST['nome']
+        cliente.endereco = request.POST['endereco']
+        cliente.contato = request.POST['contato']
+        cliente.save()
+        return redirect('listar_cliente')  # Redireciona após salvar, por exemplo
+    
+    # Se for GET, passa os valores atuais para o formulário
+    return render(request, 'app/editar_cliente.html', {
+        'cliente': cliente
+    })
 
 # Coleta
 def listar_coleta(request):
@@ -101,36 +107,43 @@ def listar_coleta(request):
     return render(request, 'app/listar_coleta.html', {'coletas': coletas})
 
 def cadastrar_coleta(request):
-    produtores = Produtor.objects.filter(ativo=True)  # Apenas produtores ativos
-
-    if request.method == 'POST':
-        produtor_id = request.POST.get('produtor', '').strip()
-        data = request.POST.get('data', '').strip()
-        quantidade_litros = request.POST.get('quantidade_litros', '').strip()
-
+    produtores = Produtor.objects.filter(ativo=True)
+    
+    if request.method == "POST":
+        produtor_id = request.POST.get("produtor")
+        data = request.POST.get("data", "").strip()
+        quantidade_litros = request.POST.get("quantidade_litros")
+        
         if produtor_id and data and quantidade_litros:
             try:
-                # Obtém o produtor ativo do banco de dados
                 produtor = get_object_or_404(Produtor, id=produtor_id, ativo=True)
-
-                # Converte a quantidade de litros para decimal
                 quantidade_litros = float(quantidade_litros)
-
-                # Converte a data para o formato correto
-                data_formatada = datetime.strptime(data, "%Y-%m-%d")
-
-                # Cria a coleta
+                
+                # Verifica se a data é uma string válida antes de converter
+                if isinstance(data, str) and data:
+                    try:
+                        data_formatada = datetime.strptime(data, "%Y-%m-%d")
+                    except ValueError:
+                        return render(request, "app/cadastrar_coleta.html", {
+                            "produtores": produtores,
+                            "erro": "Formato de data inválido. Use AAAA-MM-DD."
+                        })
+                else:
+                    return render(request, "app/cadastrar_coleta.html", {
+                        "produtores": produtores,
+                        "erro": "Data inválida"
+                    })
+                
                 Coleta.objects.create(produtor=produtor, data=data_formatada, quantidade_litros=quantidade_litros)
-
-                return redirect('listar_coleta')
-
+                return redirect("listar_coleta")
+            
             except ValueError:
-                return render(request, 'app/cadastrar_coleta.html', {
-                    'produtores': produtores,
-                    'erro': 'Quantidade inválida'
+                return render(request, "app/cadastrar_coleta.html", {
+                    "produtores": produtores,
+                    "erro": "Quantidade inválida"
                 })
-
-    return render(request, 'app/cadastrar_coleta.html', {'produtores': produtores})
+    
+    return render(request, "app/cadastrar_coleta.html", {"produtores": produtores})
 
 
 def excluir_coleta(request, coleta_id):
@@ -142,51 +155,26 @@ def excluir_coleta(request, coleta_id):
         return render(request, 'app/listar_coleta.html', {'erro': 'Coleta não encontrado'})
     
 def editar_coleta(request, coleta_id):
-    coleta = get_object_or_404(Coleta, id=coleta_id)
-    produtores = Produtor.objects.filter(ativo=True)  # Apenas produtores ativos
-
+    coleta = Coleta.objects.get(id=coleta_id)
+    produtores = Produtor.objects.all()
+    
     if request.method == 'POST':
-        produtor_id = request.POST.get('produtor', '').strip()
-        data = request.POST.get('data', '').strip()
-        quantidade_litros = request.POST.get('quantidade_litros', '').strip()
-
-        if produtor_id and data and quantidade_litros:
-            try:
-                # Obtém o produtor ativo do banco de dados
-                produtor = get_object_or_404(Produtor, id=produtor_id, ativo=True)
-                
-                # Converte a quantidade de litros para decimal
-                quantidade_litros = float(quantidade_litros)
-
-                # Converte a data para o formato correto
-                data_formatada = datetime.strptime(data, "%Y-%m-%d")
-
-                # Atualiza os campos da coleta
-                coleta.produtor = produtor
-                coleta.data = data_formatada
-                coleta.quantidade_litros = quantidade_litros
-
-                # Salva a coleta no banco de dados
-                coleta.save()
-
-                return redirect('listar_coleta')
-
-            except ValueError:
-                return render(request, 'app/editar_coleta.html', {
-                    'coleta': coleta,
-                    'produtores': produtores,
-                    'erro': 'Quantidade inválida'
-                })
-
-    return render(request, 'app/editar_coleta.html', {'coleta': coleta, 'produtores': produtores})
+        # Atualiza os dados da coleta
+        coleta.produtor_id = request.POST['produtor']
+        coleta.data = request.POST['data']
+        coleta.quantidade_litros = request.POST['quantidade_litros']
+        coleta.save()
+        return redirect('listar_coleta')  # Redireciona após salvar, por exemplo
+    
+    return render(request, 'app/editar_coleta.html', {
+        'coleta': coleta,
+        'produtores': produtores
+    })
 
 #Qualidade do leite
 def listar_qualidade(request):
     qualidade = Qualidade.objects.all()
     return render(request, 'app/listar_qualidade.html', {'qualidade': qualidade})
-
-from django.shortcuts import render, redirect, get_object_or_404
-from .models import Produtor, Coleta, Qualidade
 
 def adicionar_qualidade(request):
     produtores = Produtor.objects.filter(ativo=True)  # Apenas produtores ativos
@@ -194,19 +182,23 @@ def adicionar_qualidade(request):
 
     if request.method == 'POST':
         coleta_id = request.POST.get('coleta')
+        produtor_id = request.POST.get('produtor')  # Campo do produtor
         gordura = request.POST.get('gordura')
         proteina = request.POST.get('proteina')
         contagem_bacteriana = request.POST.get('contagem_bacteriana')
         status = request.POST.get('status')
 
-        if coleta_id and gordura and proteina and contagem_bacteriana and status:
+        if coleta_id and produtor_id and gordura and proteina and contagem_bacteriana and status:
+            print("Contagem Bacteriana:", contagem_bacteriana)  # Verifique o valor capturado
             coleta = get_object_or_404(Coleta, id=coleta_id)
+            produtor = get_object_or_404(Produtor, id=produtor_id)
 
             qualidade = Qualidade(
+                produtor=produtor,
                 coleta=coleta,
                 gordura=float(gordura),
                 proteina=float(proteina),
-                contagem_bacteriana=float(contagem_bacteriana),
+                contagem_bacteriana=float(contagem_bacteriana),  # Pode gerar erro se o valor não for um número válido
                 status=status,
             )
             qualidade.save()
@@ -216,6 +208,7 @@ def adicionar_qualidade(request):
         'produtores': produtores,
         'coletas': coletas_disponiveis
     })
+
 
 
 def editar_qualidade(request, qualidade_id):

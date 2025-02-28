@@ -129,8 +129,13 @@ html, body {
   overflow-y: auto; /* Adiciona rolagem caso o conteúdo seja maior que a tela */
   display: flex;
   flex-direction: column;
+  z-index: 1000; /* Mantém na frente */
 }
 
+.container-sidebar{
+  height: 100vh;
+  width: 300px;
+}
 .btn-bd-primary {
   background: linear-gradient(135deg, #06ef39, #08692f);
   color: white;
@@ -158,16 +163,6 @@ html, body {
   display: flex;
   gap: 10px;
   margin: 20px;
-}
-
-.light-btn {
-  background: #ddd;
-  color: black;
-}
-.dark-btn {
-  background: #333;
-  color: white;
-  width:max-content;
 }
 
 li {
@@ -354,13 +349,511 @@ li {
 }
 
 /*Gráfico*/
-.dashboard{
-  max-width: 800px;
-  margin: 40px auto;
+/* Ajuste do dashboard */
+.dashboard {
+  width: 80vw;  /* 80% da largura da tela */
+  height: 90vh; /* 90% da altura da tela */
+  margin: auto; /* Centraliza na tela */
   padding: 20px;
-  background: #fff;
+  background: #f4f4f4; /* Cor de fundo */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  height: auto; /* Mantém altura automática */
-  align-items: stretch; /* Garante que elementos filhos expandam */
+  justify-content: center;
+  align-items: center;
+}
+
+/* Ajuste dos gráficos dentro do dashboard */
+.dashboard canvas {
+  width: 100% !important;  /* Ajusta os gráficos à largura do dashboard */
+  height: auto !important; /* Mantém a proporção */
+  max-height: 400px; /* Define um tamanho máximo */
+}
+
+
+
+/* Sidebar */
+/* Modo Claro */
+[data-bs-theme="light"] {
+  background: #ffffff;
+  color: #121212;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Modo Escuro */
+[data-bs-theme="dark"] {
+  background: #181818;
+  color: #e0e0e0;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Sidebar */
+[data-bs-theme="dark"] .sidebar {
+  background: #222;
+  color: #f0f0f0;
+}
+
+/* Links */
+[data-bs-theme="dark"] .nav-link {
+  color: #bbb;
+}
+
+[data-bs-theme="dark"] .nav-link:hover {
+  background-color: #333;
+  color: #fff;
+}
+
+[data-bs-theme="dark"] .nav-link.active {
+  background-color: #444;
+  color: #fff;
+}
+
+/* Botões */
+[data-bs-theme="dark"] .btn-bd-primary {
+  background: linear-gradient(135deg, #0f9d58, #034d23);
+  color: #ffffff;
+}
+
+[data-bs-theme="dark"] .btn-bd-primary:hover {
+  background: linear-gradient(135deg, #034d23, #0f9d58);
+}
+
+[data-bs-theme="dark"] .btn {
+  border: 1px solid #444;
+}
+
+[data-bs-theme="dark"] .btn-edit {
+  background: #ffb700;
+  color: #121212;
+}
+
+[data-bs-theme="dark"] .btn-edit:hover {
+  background: #e0a800;
+}
+
+[data-bs-theme="dark"] .btn-delete {
+  background: #ff4444;
+  color: white;
+}
+
+[data-bs-theme="dark"] .btn-delete:hover {
+  background: #cc0000;
+}
+
+/* Formulários */
+[data-bs-theme="dark"] .form-container {
+  background: #222;
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+}
+
+[data-bs-theme="dark"] .form-title {
+  color: #ddd;
+}
+
+[data-bs-theme="dark"] .form-group label {
+  color: #bbb;
+}
+
+[data-bs-theme="dark"] .form-control {
+  background: #333;
+  border: 1px solid #555;
+  color: #fff;
+}
+
+[data-bs-theme="dark"] .form-control:focus {
+  border-color: #0f9d58;
+  box-shadow: 0 0 5px rgba(15, 157, 88, 0.5);
+}
+
+[data-bs-theme="dark"] .btn-submit {
+  background: linear-gradient(135deg, #0f9d58, #066c37);
+}
+
+[data-bs-theme="dark"] .btn-submit:hover {
+  background: linear-gradient(135deg, #066c37, #0f9d58);
+}
+
+/* Tabelas */
+[data-bs-theme="dark"] .table th {
+  background-color: #066c37;
+}
+
+[data-bs-theme="dark"] .table tr:nth-child(even) {
+  background-color: #242424;
+}
+
+[data-bs-theme="dark"] .table tr:nth-child(odd) {
+  background-color: #1c1c1c;
+}
+
+/* Indicadores de Status */
+[data-bs-theme="dark"] .status-active {
+  background-color: #0f9d58;
+}
+
+[data-bs-theme="dark"] .status-inactive {
+  background-color: #ff4444;
+}
+
+/* Layout de Funcionários */
+.container {
+  text-align: center;
+}
+
+.funcionarios-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.funcionario-card {
+  background: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  width: 200px;
+  text-align: center;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.funcionario-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #ccc;
+}
+
+.funcionario-info h3 {
+  margin: 10px 0 5px;
+  font-size: 18px;
+}
+
+.funcionario-info p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.status-toggle {
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.status-indicator {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.status-active {
+  background-color: green;
+}
+
+.status-inactive {
+  background-color: red;
+}
+
+.funcionario-acoes {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn-edit, .btn-delete {
+  text-decoration: none;
+  font-size: 14px;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.btn-edit {
+  background: #ffc107;
+  color: #fff;
+}
+
+.btn-delete {
+  background: #dc3545;
+  color: #fff;
+}
+
+.btn-add {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  background: #28a745;
+  color: white;
+  font-size: 16px;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+/* Modo Claro */
+[data-bs-theme="light"] {
+  background: #ffffff;
+  color: #121212;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Modo Escuro */
+[data-bs-theme="dark"] {
+  background: #181818;
+  color: #e0e0e0;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Sidebar */
+[data-bs-theme="dark"] .sidebar {
+  background: #222;
+  color: #f0f0f0;
+}
+
+/* Links */
+[data-bs-theme="dark"] .nav-link {
+  color: #bbb;
+}
+
+[data-bs-theme="dark"] .nav-link:hover {
+  background-color: #333;
+  color: #fff;
+}
+
+[data-bs-theme="dark"] .nav-link.active {
+  background-color: #444;
+  color: #fff;
+}
+
+/* Botões */
+[data-bs-theme="dark"] .btn-bd-primary {
+  background: linear-gradient(135deg, #0f9d58, #034d23);
+  color: #ffffff;
+}
+
+[data-bs-theme="dark"] .btn-bd-primary:hover {
+  background: linear-gradient(135deg, #034d23, #0f9d58);
+}
+
+[data-bs-theme="dark"] .btn {
+  border: 1px solid #444;
+}
+
+[data-bs-theme="dark"] .btn-edit {
+  background: #ffb700;
+  color: #121212;
+}
+
+[data-bs-theme="dark"] .btn-edit:hover {
+  background: #e0a800;
+}
+
+[data-bs-theme="dark"] .btn-delete {
+  background: #ff4444;
+  color: white;
+}
+
+[data-bs-theme="dark"] .btn-delete:hover {
+  background: #cc0000;
+}
+
+/* Formulários */
+[data-bs-theme="dark"] .form-container {
+  background: #222;
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+}
+
+[data-bs-theme="dark"] .form-title {
+  color: #ddd;
+}
+
+[data-bs-theme="dark"] .form-group label {
+  color: #bbb;
+}
+
+[data-bs-theme="dark"] .form-control {
+  background: #333;
+  border: 1px solid #555;
+  color: #fff;
+}
+
+[data-bs-theme="dark"] .form-control:focus {
+  border-color: #0f9d58;
+  box-shadow: 0 0 5px rgba(15, 157, 88, 0.5);
+}
+
+[data-bs-theme="dark"] .btn-submit {
+  background: linear-gradient(135deg, #0f9d58, #066c37);
+}
+
+[data-bs-theme="dark"] .btn-submit:hover {
+  background: linear-gradient(135deg, #066c37, #0f9d58);
+}
+
+/* Tabelas */
+[data-bs-theme="dark"] .table th {
+  background-color: #066c37;
+}
+
+[data-bs-theme="dark"] .table tr:nth-child(even) {
+  background-color: #242424;
+}
+
+[data-bs-theme="dark"] .table tr:nth-child(odd) {
+  background-color: #1c1c1c;
+}
+
+/* Indicadores de Status */
+[data-bs-theme="dark"] .status-active {
+  background-color: #0f9d58;
+}
+
+[data-bs-theme="dark"] .status-inactive {
+  background-color: #ff4444;
+}
+
+/* Layout de Funcionários */
+.container {
+  text-align: center;
+}
+
+.funcionarios-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.funcionario-card {
+  background: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  width: 200px;
+  text-align: center;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.funcionario-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #ccc;
+}
+
+.funcionario-info h3 {
+  margin: 10px 0 5px;
+  font-size: 18px;
+}
+
+.funcionario-info p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.status-toggle {
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.status-indicator {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.status-active {
+  background-color: green;
+}
+
+.status-inactive {
+  background-color: red;
+}
+
+.funcionario-acoes {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn-edit, .btn-delete {
+  text-decoration: none;
+  font-size: 14px;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.btn-edit {
+  background: #ffc107;
+  color: #fff;
+}
+
+.btn-delete {
+  background: #dc3545;
+  color: #fff;
+}
+
+.btn-add {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  background: #28a745;
+  color: white;
+  font-size: 16px;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+/* Modo Escuro para os cartões de funcionários */
+[data-bs-theme="dark"] .funcionario-card {
+  background: #252525;
+  box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.1);
+  color: #f0f0f0;
+}
+
+[data-bs-theme="dark"] .funcionario-img {
+  border: 3px solid #777;
+}
+
+[data-bs-theme="dark"] .btn-add {
+  background: #0b572d;
+}
+
+[data-bs-theme="dark"] .container {
+  background: #121212;
+}
+
+/* Modo Escuro para o Dashboard */
+[data-bs-theme="dark"] .dashboard {
+  background: #1e1e1e; /* Cinza escuro para um visual sofisticado */
+  color: #e0e0e0; /* Texto mais suave para legibilidade */
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1); /* Sombra sutil para destacar */
+  border-radius: 10px; /* Bordas arredondadas para suavizar o design */
+}
+
+/* Elementos internos */
+[data-bs-theme="dark"] .dashboard h1,
+[data-bs-theme="dark"] .dashboard h2,
+[data-bs-theme="dark"] .dashboard h3 {
+  color: #ffffff; /* Destaca os títulos */
+}
+
+[data-bs-theme="dark"] .dashboard p {
+  color: #cccccc; /* Texto equilibrado */
+}
+
+/* Ajuste para botões dentro do dashboard */
+[data-bs-theme="dark"] .dashboard .btn {
+  background: linear-gradient(135deg, #0f9d58, #066c37);
+  color: #fff;
+  border: none;
+}
+
+[data-bs-theme="dark"] .dashboard .btn:hover {
+  background: linear-gradient(135deg, #066c37, #0f9d58);
+  box-shadow: 0px 2px 8px rgba(15, 157, 88, 0.4);
 }

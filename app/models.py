@@ -33,7 +33,7 @@ class Qualidade(models.Model):
     coleta = models.OneToOneField(Coleta, on_delete=models.CASCADE)
     gordura = models.DecimalField(max_digits=5, decimal_places=2)
     proteina = models.DecimalField(max_digits=5, decimal_places=2)
-    contagem_bacteriana = models.IntegerField()
+    contagem_bacteriana = models.DecimalField(max_digits=5, decimal_places=2)
     status = models.CharField(
         max_length=50, 
         choices=[("Aprovado", "Aprovado"), ("Reprovado", "Reprovado")], 

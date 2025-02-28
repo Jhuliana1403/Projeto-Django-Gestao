@@ -8,16 +8,20 @@
         {% csrf_token %}
         <div class="form-group">
           <label for="nome">Nome do Produtor:</label>
-          <input type="text" id="nome" name="nome" class="form-control input-large" placeholder="Digite o nome do produtor" required>
+          <input type="text" id="nome" name="nome" class="form-control input-large" 
+                 placeholder="Digite o nome do produtor" required value="{{ produtor.nome }}">
 
           <label for="fazenda">Fazenda:</label>
-          <input type="text" id="fazenda" name="fazenda" class="form-control input-large" placeholder="Digite o nome da fazenda" required>
+          <input type="text" id="fazenda" name="fazenda" class="form-control input-large" 
+                 placeholder="Digite o nome da fazenda" required value="{{ produtor.fazenda }}">
 
           <label for="localizacao">Localização:</label>
-          <input type="text" id="localizacao" name="localizacao" class="form-control input-large" placeholder="Digite a localização" required>
+          <input type="text" id="localizacao" name="localizacao" class="form-control input-large" 
+                 placeholder="Digite a localização" required value="{{ produtor.localizacao }}">
 
           <label for="telefone">Telefone:</label>
-          <input type="text" id="telefone" name="telefone" class="form-control input-large" placeholder="Digite o telefone" required>
+          <input type="text" id="telefone" name="telefone" class="form-control input-large" 
+                 placeholder="Digite o telefone" required value="{{ produtor.telefone }}">
         </div>
         
         <button type="submit" class="btn-submit">Salvar Alterações</button>

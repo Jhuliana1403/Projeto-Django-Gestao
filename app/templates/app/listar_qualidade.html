@@ -13,7 +13,6 @@
                     <th>Coleta</th>
                     <th>Gordura (%)</th>
                     <th>Proteína (%)</th>
-                    <th>Contagem Células</th>
                     <th>Contagem Bacteriana</th>
                     <th>Status</th>
                     <th>Ações</th>
@@ -26,7 +25,6 @@
                         <td>{{ q.coleta|default:"Não informado" }}</td>
                         <td>{{ q.gordura }}</td>
                         <td>{{ q.proteina }}</td>
-                        <td>{{ q.contagem_celulas }}</td>
                         <td>{{ q.contagem_bacteriana }}</td>
                         <td>
                             <a href="{% url 'alternar_status_qualidade' q.id %}" class="status-toggle">

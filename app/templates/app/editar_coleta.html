@@ -11,15 +11,19 @@
           <select id="produtor" name="produtor" class="form-control input-large" required>
               <option value="">Selecione um produtor</option>
               {% for produtor in produtores %}
-                  <option value="{{ produtor.id }}">{{ produtor.nome }}</option>
+                  <option value="{{ produtor.id }}" {% if produtor.id == coleta.produtor.id %} selected {% endif %}>
+                      {{ produtor.nome }}
+                  </option>
               {% endfor %}
           </select>
 
             <label for="data">Data:</label>
-            <input type="date" id="data" name="data" class="form-control input-large" placeholder="Digite a data" required>
+            <input type="date" id="data" name="data" class="form-control input-large" 
+                   placeholder="Digite a data" required value="{{ coleta.data|date:'Y-m-d' }}">
 
             <label for="quantidade_litros">Quantidade por Litros:</label>
-            <input type="number" id="quantidade_litros" name="quantidade_litros" class="form-control input-large" placeholder="Digite a quantidade por litros" step="0.01" required>
+            <input type="number" id="quantidade_litros" name="quantidade_litros" class="form-control input-large" 
+                   placeholder="Digite a quantidade por litros" step="0.01" required value="{{ coleta.quantidade_litros }}">
          </div>
         
         <button type="submit" class="btn-submit">Salvar Alterações</button>

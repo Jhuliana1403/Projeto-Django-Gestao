@@ -4,7 +4,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path("", views.index, name="index"),
+    #Dashboard
+    path("", views.dashboard, name="dashboard"),
 
     # Rotas para Produtor
     path("cadastrar_produtor/", views.cadastrar_produtor, name="cadastrar_produtor"),
@@ -52,8 +53,6 @@ urlpatterns = [
     path('cadastrar_venda/', views.cadastrar_venda, name='cadastrar_venda'),
     path('editar_venda/<int:venda_id>/', views.editar_venda, name='editar_venda'),
     path('excluir_venda/<int:venda_id>/', views.excluir_venda, name='excluir_venda'),
-    #Dashboard
-    path("dashboard/", views.dashboard, name="dashboard"),
 ]
 
 if settings.DEBUG:
