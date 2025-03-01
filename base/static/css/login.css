@@ -5,11 +5,11 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    background: linear-gradient(120deg, #00843D, #6AB04A); /* Verde escuro e verde claro */
-    color: #fff;
+    background: linear-gradient(120deg, #4CAF50, #6AB04A); /* Verde escuro e verde claro */
+    color: #ddd;
 }
 .login-container {
-    background: #fff;
+    background: #ddd;
     padding: 2rem;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
@@ -21,6 +21,7 @@ body {
     margin-bottom: 1.5rem;
     color: #333;
 }
+
 .form-control {
     margin-bottom: 1rem;
     text-align: left;
@@ -40,7 +41,7 @@ body {
     outline: none;
 }
 .form-control input:focus {
-    border-color: #6AB04A; /* Verde claro */
+    border-color: #4CAF50; /* Verde claro */
 }
 .btn {
     display: inline-block;
@@ -48,20 +49,20 @@ body {
     padding: 0.8rem;
     border: none;
     background:rgb(36, 104, 45); 
-    color: #fff;
+    color: #ddd;
     font-size: 1rem;
     border-radius: 4px;
     cursor: pointer;
     transition: background 0.3s;
 }
 .btn:hover {
-    background: #18bd4a; /* Vermelho mais escuro ao passar o mouse */
+    background: #4CAF50; /* Vermelho mais escuro ao passar o mouse */
 }
 .link {
     margin-top: 1rem;
     display: block;
     font-size: 0.9rem;
-    color: #6AB04A;
+    color: #4CAF50;
     text-decoration: none;
 }
 .link:hover {

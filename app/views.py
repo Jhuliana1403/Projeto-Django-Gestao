@@ -8,15 +8,19 @@ from datetime import datetime
 from django.http import JsonResponse
 from django.db.models.functions import TruncMonth, TruncYear
 from django.db.models import Sum
+from django.contrib.auth.decorators import login_required
 
+@login_required(login_url='login_index')
 def index(request):
     return render(request, 'app/index.html')
 
 # Produtor
+@login_required(login_url='login_index')
 def listar_produtor(request):
     produtores = Produtor.objects.all()
     return render(request, 'app/listar_produtor.html', {'produtores': produtores})
 
+@login_required(login_url='login_index')
 def cadastrar_produtor(request):
     if request.method == 'POST':
         nome = request.POST.get('nome', '').strip()
@@ -28,6 +32,7 @@ def cadastrar_produtor(request):
             return redirect('listar_produtor')
     return render(request, 'app/cadastrar_produtor.html')
 
+@login_required(login_url='login_index')
 def excluir_produtor(request, produtor_id):
     try:
         produtor = Produtor.objects.get(id=produtor_id)
@@ -36,7 +41,7 @@ def excluir_produtor(request, produtor_id):
     except Produtor.DoesNotExist:
         return render(request, 'app/listar_produtor.html', {'erro': 'Produtor não encontrado'})
 
-
+@login_required(login_url='login_index')
 def editar_produtor(request, produtor_id):
     produtor = get_object_or_404(Produtor, id=produtor_id)
 
@@ -51,7 +56,7 @@ def editar_produtor(request, produtor_id):
 
     return render(request, 'app/editar_produtor.html', {'produtor': produtor})
 
-
+@login_required(login_url='login_index')
 def alternar_status_produtor(request, produtor_id):
     produtor = get_object_or_404(Produtor, id=produtor_id)
     produtor.ativo = not produtor.ativo  # Alterna entre True e False
@@ -59,10 +64,12 @@ def alternar_status_produtor(request, produtor_id):
     return redirect('listar_produtor')  # Redireciona para a lista de produtores
 
 # Cliente
+@login_required(login_url='login_index')
 def listar_cliente(request):
     clientes = Cliente.objects.all()
     return render(request, 'app/listar_cliente.html', {'clientes': clientes})
 
+@login_required(login_url='login_index')
 def cadastrar_cliente(request):
     if request.method == 'POST':
         nome = request.POST.get('nome', '').strip()
@@ -73,6 +80,7 @@ def cadastrar_cliente(request):
             return redirect('listar_cliente')
     return render(request, 'app/cadastrar_cliente.html')
 
+@login_required(login_url='login_index')
 def excluir_cliente(request, cliente_id):
     try:
         cliente = Cliente.objects.get(id=cliente_id)
@@ -81,7 +89,7 @@ def excluir_cliente(request, cliente_id):
     except Cliente.DoesNotExist:
         return render(request, 'app/listar_cliente.html', {'erro': 'Cliente não encontrado'})
 
-
+@login_required(login_url='login_index')
 def editar_cliente(request, cliente_id):
     clientes = get_object_or_404(Cliente, id=cliente_id)
 
@@ -96,10 +104,12 @@ def editar_cliente(request, cliente_id):
     return render(request, 'app/editar_cliente.html', {'clientes': clientes})
 
 # Coleta
+@login_required(login_url='login_index')
 def listar_coleta(request):
     coletas = Coleta.objects.all()
     return render(request, 'app/listar_coleta.html', {'coletas': coletas})
 
+@login_required(login_url='login_index')
 def cadastrar_coleta(request):
     produtores = Produtor.objects.filter(ativo=True)  # Apenas produtores ativos
 
@@ -132,7 +142,7 @@ def cadastrar_coleta(request):
 
     return render(request, 'app/cadastrar_coleta.html', {'produtores': produtores})
 
-
+@login_required(login_url='login_index')
 def excluir_coleta(request, coleta_id):
     try:
         coleta = Coleta.objects.get(id=coleta_id)
@@ -141,6 +151,7 @@ def excluir_coleta(request, coleta_id):
     except Coleta.DoesNotExist:
         return render(request, 'app/listar_coleta.html', {'erro': 'Coleta não encontrado'})
     
+@login_required(login_url='login_index')
 def editar_coleta(request, coleta_id):
     coleta = get_object_or_404(Coleta, id=coleta_id)
     produtores = Produtor.objects.filter(ativo=True)  # Apenas produtores ativos
@@ -181,13 +192,16 @@ def editar_coleta(request, coleta_id):
     return render(request, 'app/editar_coleta.html', {'coleta': coleta, 'produtores': produtores})
 
 #Qualidade do leite
+@login_required(login_url='login_index')
 def listar_qualidade(request):
     qualidade = Qualidade.objects.all()
     return render(request, 'app/listar_qualidade.html', {'qualidade': qualidade})
 
+
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Produtor, Coleta, Qualidade
 
+@login_required(login_url='login_index')
 def adicionar_qualidade(request):
     produtores = Produtor.objects.filter(ativo=True)  # Apenas produtores ativos
     coletas_disponiveis = Coleta.objects.filter(qualidade__isnull=True)  # Coletas sem qualidade
@@ -217,7 +231,7 @@ def adicionar_qualidade(request):
         'coletas': coletas_disponiveis
     })
 
-
+@login_required(login_url='login_index')
 def editar_qualidade(request, qualidade_id):
     qualidade = get_object_or_404(Qualidade, id=qualidade_id)
     produtores = Produtor.objects.filter(ativo=True)  # Apenas produtores ativos
@@ -247,7 +261,7 @@ def editar_qualidade(request, qualidade_id):
         'coletas': coletas
     })
 
-
+@login_required(login_url='login_index')
 def obter_coletas(request):
     produtor_id = request.GET.get('produtor_id')
 
@@ -257,6 +271,7 @@ def obter_coletas(request):
     
     return JsonResponse({"error": "ID do produtor não fornecido"}, status=400)
 
+@login_required(login_url='login_index')
 def excluir_qualidade(request, qualidade_id):
     try:
         qualidade = Qualidade.objects.get(id=qualidade_id)
@@ -265,6 +280,7 @@ def excluir_qualidade(request, qualidade_id):
     except Qualidade.DoesNotExist:
         return render(request, 'app/listar_qualidade.html', {'erro': 'Qualidade não encontrado'})
 
+@login_required(login_url='login_index')
 def alternar_status_qualidade(request, qualidade_id):
     qualidade = get_object_or_404(Qualidade, id=qualidade_id)
     qualidade.ativo = not qualidade.ativo  # Alterna entre True e False
@@ -273,10 +289,12 @@ def alternar_status_qualidade(request, qualidade_id):
 
 
 # Pagamento
+@login_required(login_url='login_index')
 def listar_pagamentos(request):
     pagamentos = Pagamento.objects.all()
     return render(request, 'app/listar_pagamentos.html', {'pagamentos': pagamentos})
 
+@login_required(login_url='login_index')
 def cadastrar_pagamento(request):
     if request.method == 'POST':
         produtor_id = request.POST.get('produtor')
@@ -293,6 +311,7 @@ def cadastrar_pagamento(request):
     produtores = Produtor.objects.all()
     return render(request, 'app/cadastrar_pagamento.html', {'produtores': produtores})
 
+@login_required(login_url='login_index')
 def editar_pagamento(request, pagamento_id):
     pagamento = get_object_or_404(Pagamento, id=pagamento_id)
     
@@ -319,7 +338,7 @@ def editar_pagamento(request, pagamento_id):
     produtores = Produtor.objects.all()
     return render(request, 'app/editar_pagamento.html', {'pagamento': pagamento, 'produtores': produtores})
 
-
+@login_required(login_url='login_index')
 def excluir_pagamento(request, pagamento_id):
     try:
         pagamento = get_object_or_404(Pagamento, id=pagamento_id)
@@ -329,11 +348,13 @@ def excluir_pagamento(request, pagamento_id):
         return render(request, 'app/listar_pagamentos.html', {'erro': 'Pagamento não encontrado'})
     
 # Listar funcionários
+@login_required(login_url='login_index')
 def listar_funcionarios(request):
     funcionarios = Funcionario.objects.all()
     return render(request, 'app/listar_funcionarios.html', {'funcionarios': funcionarios})
 
 # Cadastrar funcionário
+@login_required(login_url='login_index')
 def cadastrar_funcionario(request):
     if request.method == "POST":
         nome = request.POST['nome']
@@ -355,6 +376,7 @@ def cadastrar_funcionario(request):
     return render(request, 'app/cadastrar_funcionario.html')
 
 # Editar funcionário
+@login_required(login_url='login_index')
 def editar_funcionario(request, funcionario_id):
     funcionario = get_object_or_404(Funcionario, id=funcionario_id)
 
@@ -375,6 +397,7 @@ def editar_funcionario(request, funcionario_id):
     return render(request, 'app/editar_funcionario.html', {'funcionario': funcionario})
 
 # Alternar status (Ativo/Inativo)
+@login_required(login_url='login_index')
 def alternar_status_funcionario(request, funcionario_id):
     funcionario = get_object_or_404(Funcionario, id=funcionario_id)
     funcionario.ativo = not funcionario.ativo
@@ -382,6 +405,7 @@ def alternar_status_funcionario(request, funcionario_id):
     return redirect('listar_funcionarios')
 
 # Excluir funcionário
+@login_required(login_url='login_index')
 def excluir_funcionario(request, funcionario_id):
     funcionario = get_object_or_404(Funcionario, id=funcionario_id)
     if funcionario.imagem:
@@ -391,11 +415,13 @@ def excluir_funcionario(request, funcionario_id):
 
 #Vendas
 # Listar vendas
+@login_required(login_url='login_index')
 def listar_vendas(request):
     vendas = Venda.objects.all()
     return render(request, 'app/listar_vendas.html', {'vendas': vendas})
 
 # Cadastrar venda
+@login_required(login_url='login_index')
 def cadastrar_venda(request):
     if request.method == "POST":
         cliente_id = request.POST['cliente']
@@ -416,6 +442,7 @@ def cadastrar_venda(request):
     return render(request, 'app/cadastrar_venda.html', {'clientes': clientes})
 
 # Editar venda
+@login_required(login_url='login_index')
 def editar_venda(request, venda_id):
     venda = get_object_or_404(Venda, id=venda_id)
 
@@ -430,11 +457,13 @@ def editar_venda(request, venda_id):
     return render(request, 'app/editar_venda.html', {'venda': venda, 'clientes': clientes})
 
 # Excluir venda
+@login_required(login_url='login_index')
 def excluir_venda(request, venda_id):
     venda = get_object_or_404(Venda, id=venda_id)
     venda.delete()
     return redirect('listar_vendas')
 
+@login_required(login_url='login_index')
 def dashboard(request):
     hoje = datetime.today()
     mes_atual = hoje.strftime("%B")

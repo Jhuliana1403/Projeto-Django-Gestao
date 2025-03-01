@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app',
+    'login',
 ]
 
 MIDDLEWARE = [
@@ -120,3 +121,8 @@ MEDIA_URL = 'media/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTHENTICATION_BACKENDS = [
+    'login.backends.EmailBackend',  # Usa o backend de email personalizado
+    'django.contrib.auth.backends.ModelBackend',  # Backend padrão do Django
+]
