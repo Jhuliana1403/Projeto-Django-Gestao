@@ -126,3 +126,6 @@ AUTHENTICATION_BACKENDS = [
     'login.backends.EmailBackend',  # Usa o backend de email personalizado
     'django.contrib.auth.backends.ModelBackend',  # Backend padrão do Django
 ]
+
+# settings.py
+LOGIN_URL = '/login/'  # URL de login do seu projeto

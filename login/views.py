@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib import messages
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from .forms import AdminCreationForm
 
 # Create your views here.
@@ -43,3 +45,32 @@ def cadastrar_admin(request):
         form = AdminCreationForm()
 
     return render(request, 'login/cadastrar_admin.html', {'form': form})
+
+# Função para editar os dados do usuário logado
+@login_required
+def editar_admin(request):
+    user = request.user  # Obtém o usuário logado
+    
+    # Se o método for POST, significa que estamos enviando o formulário para atualizar
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        password = request.POST.get('password')
+
+        # Atualiza os dados do usuário
+        user.email = email
+        user.first_name = first_name
+        user.last_name = last_name
+
+        # Verifica se foi fornecida uma nova senha
+        if password:
+            user.set_password(password)
+        
+        user.save()
+
+        messages.success(request, 'Usuário atualizado com sucesso!')
+        return redirect('editar_admin')  # Redireciona para a mesma página com os dados atualizados
+
+    # Caso o método seja GET, renderizamos o formulário com os dados atuais do usuário
+    return render(request, 'login/editar_admin.html', {'user': user})

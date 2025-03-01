@@ -35,7 +35,7 @@
                     <strong>{{ request.user.first_name }}</strong>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-                    <li><a class="dropdown-item" href="#">Configurações</a></li>
+                    <li><a class="dropdown-item" href="{% url "editar_admin" %}">Configurações</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href="{% url "logout" %}">Sair</a></li>
                 </ul>
