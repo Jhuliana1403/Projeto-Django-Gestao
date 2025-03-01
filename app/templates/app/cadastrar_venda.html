@@ -1,27 +1,42 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
-  <div class="form-container">
-      <h2 class="form-title">Cadastrar Venda</h2>
-      <form method="POST">
+    <div class="form-container">
+        <h2 class="form-title">Cadastrar Venda</h2>
+
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        <script src="{% static 'js/delay_error.js' %}"></script>
+        {% endif %}
+
+        <form method="POST">
         {% csrf_token %}
         <div class="form-group">
             <label for="cliente">Cliente:</label>
-            <select id="cliente" name="cliente" class="form-control input-large" required>
+            <select id="cliente" name="cliente" class="form-control input-large">
                 <option value="">Selecione um cliente</option>
                 {% for cliente in clientes %}
-                    <option value="{{ cliente.id }}">{{ cliente.nome }}</option>
+                    <option value="{{ cliente.id }}" {% if cliente.id == request.POST.cliente %}selected{% endif %}>
+                        {{ cliente.nome }}
+                    </option>
                 {% endfor %}
             </select>
 
             <label for="quantidade_litros">Quantidade de Litros:</label>
-            <input type="number" id="quantidade_litros" name="quantidade_litros" class="form-control input-large" placeholder="Digite a quantidade de litros" required>
+            <input type="number" id="quantidade_litros" name="quantidade_litros" class="form-control input-large" placeholder="Digite a quantidade de litros" value="{{ request.POST.quantidade_litros }}">
 
             <label for="valor_total">Valor Total:</label>
-            <input type="text" id="valor_total" name="valor_total" class="form-control input-large" placeholder="Digite o valor total" required>
+            <input type="text" id="valor_total" name="valor_total" class="form-control input-large" placeholder="Digite o valor total" value="{{ request.POST.valor_total }}">
         </div>
 
-        <button type="submit" class="btn-submit">Salvar</button>
-      </form>
-  </div>
+        <button type="submit" class="btn-submit">Cadastrar Venda</button>
+        </form>
+    </div>
 {% endblock %}

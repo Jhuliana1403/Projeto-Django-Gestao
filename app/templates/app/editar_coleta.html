@@ -2,31 +2,44 @@
 {% load static %}
 
 {% block content %}
-  <div class="form-container">
-      <h2 class="form-title">Editar Coleta</h2>
-      <form method="POST">
+    <div class="form-container">
+        <h2 class="form-title">Editar Coleta</h2>
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        <script src="{% static 'js/delay_error.js' %}"></script>
+        {% endif %}
+  
+        <form method="POST">
         {% csrf_token %}
         <div class="form-group">
-          <label for="produtor">Produtor:</label>
-          <select id="produtor" name="produtor" class="form-control input-large" required>
-              <option value="">Selecione um produtor</option>
-              {% for produtor in produtores %}
-                  <option value="{{ produtor.id }}" {% if produtor.id == coleta.produtor.id %} selected {% endif %}>
-                      {{ produtor.nome }}
-                  </option>
-              {% endfor %}
-          </select>
+            <label for="produtor">Produtor:</label>
+            <select id="produtor" name="produtor" class="form-control input-large" required>
+                <option value="">Selecione um produtor</option>
+                {% for produtor in produtores %}
+                    <option value="{{ produtor.id }}" {% if produtor.id|stringformat:"s" == request.POST.produtor or produtor.id == coleta.produtor.id %} selected {% endif %}>
+                        {{ produtor.nome }}
+                    </option>
+                {% endfor %}
+            </select>
 
             <label for="data">Data:</label>
             <input type="date" id="data" name="data" class="form-control input-large" 
-                   placeholder="Digite a data" required value="{{ coleta.data|date:'Y-m-d' }}">
+                    placeholder="Digite a data" required 
+                    value="{{ request.POST.data|default:coleta.data|date:'Y-m-d' }}">
 
             <label for="quantidade_litros">Quantidade por Litros:</label>
             <input type="number" id="quantidade_litros" name="quantidade_litros" class="form-control input-large" 
-                   placeholder="Digite a quantidade por litros" step="0.01" required value="{{ coleta.quantidade_litros }}">
-         </div>
+                    placeholder="Digite a quantidade por litros" step="0.01" required 
+                    value="{{ request.POST.quantidade_litros|default:coleta.quantidade_litros }}">
+        </div>
         
         <button type="submit" class="btn-submit">Salvar Alterações</button>
-      </form>
-  </div>
+        </form>
+    </div>
 {% endblock %}

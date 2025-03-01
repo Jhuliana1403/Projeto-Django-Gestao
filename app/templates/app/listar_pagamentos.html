@@ -4,7 +4,17 @@
 {% block content %}
 <div class="container">
     <h2 class="title">Pagamentos</h2>
-    
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+    <script src="{% static 'js/delay_error.js' %}"></script>
+    {% endif %}
+
     {% if pagamentos %}
         <table class="table">
             <thead>
@@ -38,7 +48,8 @@
     {% else %}
         <p>Nenhum pagamento registrado.</p>
     {% endif %}
-    
+
     <a href="{% url 'cadastrar_pagamento' %}" class="btn btn-add">+ Cadastrar Pagamento</a>
 </div>
+
 {% endblock %}

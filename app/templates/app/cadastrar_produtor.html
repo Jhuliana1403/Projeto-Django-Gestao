@@ -2,24 +2,37 @@
 {% load static %}
 
 {% block content %}
-  <div class="form-container">
-      <h2 class="form-title">Cadastrar Produtor</h2>
-      <form method="POST">
+    <div class="form-container">
+        <h2 class="form-title">Cadastrar Produtor</h2>
+
+        <!-- Exibir mensagens de erro ou sucesso -->
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        <script src="{% static 'js/delay_error.js' %}"></script>
+        {% endif %}
+
+        <form method="POST">
         {% csrf_token %}
         <div class="form-group">
             <label for="nome">Nome do Produtor:</label>
-            <input type="text" id="nome" name="nome" class="form-control input-large" placeholder="Digite o nome do produtor" required>
+            <input type="text" id="nome" name="nome" class="form-control input-large" placeholder="Digite o nome do produtor" value="{{ nome|default_if_none:'' }}">
 
             <label for="fazenda">Fazenda:</label>
-            <input type="text" id="fazenda" name="fazenda" class="form-control input-large" placeholder="Digite o nome da fazenda" required>
+            <input type="text" id="fazenda" name="fazenda" class="form-control input-large" placeholder="Digite o nome da fazenda" value="{{ fazenda|default_if_none:'' }}">
 
             <label for="localizacao">Localização:</label>
-            <input type="text" id="localizacao" name="localizacao" class="form-control input-large" placeholder="Digite a localização" required>
+            <input type="text" id="localizacao" name="localizacao" class="form-control input-large" placeholder="Digite a localização" value="{{ localizacao|default_if_none:'' }}">
 
             <label for="telefone">Telefone:</label>
-            <input type="text" id="telefone" name="telefone" class="form-control input-large" placeholder="Digite o telefone" required>
+            <input type="number" id="telefone" name="telefone" class="form-control input-large" placeholder="Digite o telefone" value="{{ telefone|default_if_none:'' }}">
         </div>
         <button type="submit" class="btn-submit">Cadastrar Produtor</button>
-      </form>
-  </div>
+        </form>
+    </div>
 {% endblock %}

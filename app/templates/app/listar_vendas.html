@@ -4,7 +4,18 @@
 {% block content %}
 <div class="container">
     <h2 class="title">Vendas</h2>
-    <a href="{% url 'cadastrar_venda' %}" class="btn btn-add">+ Adicionar Venda</a>
+
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+    <script src="{% static 'js/delay_error.js' %}"></script>
+    {% endif %}
+    {% if vendas %}
         <table class="table">
             <thead>
                 <tr>
@@ -14,23 +25,29 @@
                     <th>Valor Total</th>
                     <th>Ações</th>
                 </tr>
+            </thead>
+            <tbody>
                 {% for venda in vendas %}
-                <tr>
-                    <td>{{ venda.cliente.nome }}</td>
-                    <td>{{ venda.data_venda }}</td>
-                    <td>{{ venda.quantidade_litros }}</td>
-                    <td>{{ venda.valor_total }}</td>
-                    <td>
-                        <a href="{% url 'editar_venda' venda.id %}">
-                            <i class="bi bi-pencil"></i>
-                        </a>
-                        <a href="{% url 'excluir_venda' venda.id %}" onclick="return confirm('Tem certeza que deseja excluir?')">
-                            <i class="bi bi-trash"></i>
-                        </a> 
-                    </td>
-                </tr>
+                    <tr>
+                        <td>{{ venda.cliente.nome }}</td>
+                        <td>{{ venda.data_venda }}</td>
+                        <td>{{ venda.quantidade_litros }}</td>
+                        <td>R$ {{ venda.valor_total }}</td>
+                        <td>
+                            <a href="{% url 'editar_venda' venda.id %}">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <a href="{% url 'excluir_venda' venda.id %}" onclick="return confirm('Tem certeza que deseja excluir?')">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
                 {% endfor %}
             </tbody>
         </table>
-    </div>
+    {% else %}
+        <p>Nenhum registro de venda.</p>
+    {% endif %}
+    <a href="{% url 'cadastrar_venda' %}" class="btn btn-add">+ Adicionar Venda</a>
+</div>
 {% endblock %}

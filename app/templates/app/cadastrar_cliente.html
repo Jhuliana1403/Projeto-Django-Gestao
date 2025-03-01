@@ -2,22 +2,33 @@
 {% load static %}
 
 {% block content %}
-  <div class="form-container">
-      <h2 class="form-title">Cadastrar do Cliente</h2>
-      <form method="POST">
-        {% csrf_token %}
+    <div class="form-container">
+    <h2 class="form-title">Cadastrar Cliente</h2>
+    <!-- Exibir mensagens de erro ou sucesso -->
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        <script src="{% static 'js/delay_error.js' %}"></script>
+        {% endif %}
+
+    <form method="POST">
+    {% csrf_token %}
         <div class="form-group">
             <label for="nome">Nome do Cliente:</label>
-            <input type="text" id="nome" name="nome" class="form-control input-large" placeholder="Digite o nome do medicamento" required>
+            <input type="text" id="nome" name="nome" class="form-control input-large" placeholder="Digite o nome do cliente" value="{{ nome|default:'' }}">
 
             <label for="endereco">Endereço:</label>
-            <input type="text" id="endereco" name="endereco" class="form-control input-large" placeholder="Digite a descrição do produto" required>
+            <input type="text" id="endereco" name="endereco" class="form-control input-large" placeholder="Digite o endereço" value="{{ endereco|default:'' }}">
 
             <label for="contato">Contato:</label>
-            <input type="number" id="contato" name="contato" class="form-control input-large" placeholder="Digite o contato" required>
-         </div>
-        
-        <button type="submit" class="btn-submit">Cadastrar Cliente</button>
-      </form>
-  </div>
+            <input type="number" id="contato" name="contato" class="form-control input-large" placeholder="Digite o contato" value="{{ contato|default:'' }}">
+            
+            <button type="submit" class="btn-submit">Cadastrar Cliente</button>
+        </div>
+    </form>
 {% endblock %}

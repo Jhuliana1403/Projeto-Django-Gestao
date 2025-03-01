@@ -3,15 +3,26 @@
 
 {% block content %}
   <div class="container">
-      <h2 class="title">Lista de Coletas</h2>
-      
+    <h2 class="title">Lista de Coletas</h2>
+
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+    <script src="{% static 'js/delay_error.js' %}"></script>
+    {% endif %}
+
       {% if coletas %}
         <table class="table">
           <thead>
             <tr>
               <th>Produtor</th>
               <th>Data</th>
-              <th>Quantidade/Litros</th>
+              <th>Quantidade (L)</th>
               <th>Ações</th>
             </tr>
           </thead>
@@ -19,13 +30,13 @@
             {% for coleta in coletas %}
                 <tr>
                     <td>{{ coleta.produtor }}</td>
-                    <td>{{ coleta.data }}</td>
-                    <td>{{ coleta.quantidade_litros }}</td> 
-                    <td>
-                      <a href="{% url 'editar_coleta' coleta.id %}">
-                        <i class="bi bi-pencil"></i> <!-- Ícone de edição -->
+                    <td>{{ coleta.data|date:"d/m/Y" }}</td> 
+                    <td>{{ coleta.quantidade_litros}}</td>
+                    <td class="actions">
+                      <a href="{% url 'editar_coleta' coleta.id %}" title="Editar">
+                        <i class="bi bi-pencil"></i>
                       </a>
-                      <a href="{% url 'excluir_coleta' coleta.id %}" onclick="return confirm('Tem certeza que deseja excluir?')">
+                      <a href="{% url 'excluir_coleta' coleta.id %}" title="Excluir" onclick="return confirm('Tem certeza que deseja excluir esta coleta?')">
                         <i class="bi bi-trash"></i>
                       </a> 
                     </td>

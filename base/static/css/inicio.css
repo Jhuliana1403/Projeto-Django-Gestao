@@ -7,35 +7,12 @@ html, body {
   display: flex;
 }
 
-/*Botão do dark e light mode*/
-
-#theme-toggle {
-  display: flex;
-  justify-content: end;
-  align-items: end;
-  border: none;
-  cursor: pointer;
-  background-color: transparent;
-}
-
-#theme-icon {
-  width: 32px;
-  height: 32px;
-  fill: currentColor;
-}
-
 .bd-placeholder-img {
     font-size: 1.125rem;
     text-anchor: middle;
     -webkit-user-select: none;
     -moz-user-select: none;
     user-select: none;
-  }
-  
-  @media (min-width: 768px) {
-    .bd-placeholder-img-lg {
-      font-size: 3.5rem;
-    }
   }
   
   .b-example-divider {
@@ -97,7 +74,7 @@ html, body {
     color: #222222;
   }
 
-  /* Remove o destaque azul no hover do botão */
+/* Remove o destaque azul no hover do botão */
 .dropdown-item:focus,
 .dropdown-item:hover {
     background-color: transparent; /* Cor de fundo do hover */
@@ -136,6 +113,7 @@ html, body {
   height: 100vh;
   width: 300px;
 }
+
 .btn-bd-primary {
   background: linear-gradient(135deg, #06ef39, #08692f);
   color: white;
@@ -150,21 +128,6 @@ html, body {
   transform: scale(1.05);
 }
 
-/*Modo noturno e claro*/
-.light-mode {
-  background: white;
-  color: black;
-}
-.dark-mode {
-  background: #121212;
-  color: white;
-}
-.theme-toggle {
-  display: flex;
-  gap: 10px;
-  margin: 20px;
-}
-
 li {
   display: flex;
   width: 100%;
@@ -173,12 +136,13 @@ li {
 /*Estilização do formulário*/
 /* Container principal */
 .form-container {
-  max-width: 400px;
+  width: 800px;
   padding: 20px;
   background: #fff;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   text-align: center;
+  margin-left: 150px;  
 }
 
 /* Título do formulário */
@@ -186,6 +150,7 @@ li {
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 20px;
+  margin-top: 100px;
   color: #333;
 }
 
@@ -222,7 +187,7 @@ li {
 
 /* Botão de envio */
 .btn-submit {
-  width: 100%;
+  width: 50%;
   padding: 10px;
   background: linear-gradient(135deg, #28a745, #218838);
   color: white;
@@ -238,8 +203,37 @@ li {
   transform: scale(1.05);
 }
 
+.messages {
+  position: fixed;
+  top: 10px;
+  left: 56%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 500px;
+  z-index: 1000;
+  text-align: center;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+
+/* Estilo para mensagens de erro */
+.alert-error {
+  background-color: #ff4d4d;
+  color: white;
+}
+
+/* Estilo para mensagens de sucesso */
+.alert-success {
+  background-color: #4CAF50;
+  color: white;
+}
+
 .container {
-  max-width: 800px;
+  max-width: auto;
   margin: 40px auto;
   padding: 20px;
   background: #fff;
@@ -247,8 +241,9 @@ li {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  height: auto; /* Mantém altura automática */
-  align-items: stretch; /* Garante que elementos filhos expandam */
+  height: auto; 
+  align-items: stretch; 
+  text-align: center;
 }
 
 
@@ -375,6 +370,38 @@ li {
 
 /* Sidebar */
 /* Modo Claro */
+
+/*Botão do dark e light mode*/
+#theme-toggle {
+  display: flex;
+  justify-content: end;
+  align-items: end;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+#theme-icon {
+  width: 32px;
+  height: 32px;
+  fill: currentColor;
+}
+
+.light-mode {
+  background: white;
+  color: black;
+}
+
+.dark-mode {
+  background: #121212;
+  color: white;
+}
+
+.theme-toggle {
+  display: flex;
+  gap: 10px;
+  margin: 20px;
+}
 [data-bs-theme="light"] {
   background: #ffffff;
   color: #121212;
@@ -496,100 +523,6 @@ li {
   background-color: #ff4444;
 }
 
-/* Layout de Funcionários */
-.container {
-  text-align: center;
-}
-
-.funcionarios-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
-}
-
-.funcionario-card {
-  background: #fff;
-  padding: 15px;
-  border-radius: 10px;
-  width: 200px;
-  text-align: center;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.funcionario-img {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid #ccc;
-}
-
-.funcionario-info h3 {
-  margin: 10px 0 5px;
-  font-size: 18px;
-}
-
-.funcionario-info p {
-  margin: 5px 0;
-  font-size: 14px;
-}
-
-.status-toggle {
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.status-indicator {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  margin-right: 5px;
-}
-
-.status-active {
-  background-color: green;
-}
-
-.status-inactive {
-  background-color: red;
-}
-
-.funcionario-acoes {
-  margin-top: 10px;
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-}
-
-.btn-edit, .btn-delete {
-  text-decoration: none;
-  font-size: 14px;
-  padding: 5px 10px;
-  border-radius: 5px;
-}
-
-.btn-edit {
-  background: #ffc107;
-  color: #fff;
-}
-
-.btn-delete {
-  background: #dc3545;
-  color: #fff;
-}
-
-.btn-add {
-  display: block;
-  margin: 20px auto;
-  padding: 10px 20px;
-  background: #28a745;
-  color: white;
-  font-size: 16px;
-  text-decoration: none;
-  border-radius: 5px;
-}
 
 /* Modo Claro */
 [data-bs-theme="light"] {
@@ -713,10 +646,120 @@ li {
   background-color: #ff4444;
 }
 
-/* Layout de Funcionários */
-.container {
-  text-align: center;
+
+/* Modo Escuro para os cartões de funcionários */
+[data-bs-theme="dark"] .funcionario-card {
+  background: #252525;
+  box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.1);
+  color: #f0f0f0;
 }
+
+[data-bs-theme="dark"] .funcionario-img {
+  border: 3px solid #777;
+}
+
+[data-bs-theme="dark"] .btn-add {
+  background: #0b572d;
+}
+
+[data-bs-theme="dark"] .container {
+  background: #121212;
+}
+
+/* Modo Escuro para o Dashboard */
+[data-bs-theme="dark"] .dashboard {
+  background: #1e1e1e; /* Cinza escuro para um visual sofisticado */
+  color: #e0e0e0; /* Texto mais suave para legibilidade */
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1); /* Sombra sutil para destacar */
+  border-radius: 10px; /* Bordas arredondadas para suavizar o design */
+}
+
+/* Elementos internos */
+[data-bs-theme="dark"] .dashboard h1,
+[data-bs-theme="dark"] .dashboard h2,
+[data-bs-theme="dark"] .dashboard h3 {
+  color: #ffffff; /* Destaca os títulos */
+}
+
+[data-bs-theme="dark"] .dashboard p {
+  color: #cccccc; /* Texto equilibrado */
+}
+
+/* Ajuste para botões dentro do dashboard */
+[data-bs-theme="dark"] .dashboard .btn {
+  background: linear-gradient(135deg, #0f9d58, #066c37);
+  color: #fff;
+  border: none;
+}
+
+[data-bs-theme="dark"] .dashboard .btn:hover {
+  background: linear-gradient(135deg, #066c37, #0f9d58);
+  box-shadow: 0px 2px 8px rgba(15, 157, 88, 0.4);
+}
+
+/* Layout de Funcionários */
+.funcionarios-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.funcionario-card {
+  background: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  width: 200px;
+  text-align: center;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.funcionario-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #ccc;
+}
+
+.funcionario-info h3 {
+  margin: 10px 0 5px;
+  font-size: 18px;
+}
+
+.funcionario-info p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.status-toggle {
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.status-indicator {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.status-active {
+  background-color: green;
+}
+
+.status-inactive {
+  background-color: red;
+}
+
+.funcionario-acoes {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
 
 .funcionarios-grid {
   display: flex;
@@ -780,80 +823,8 @@ li {
   gap: 10px;
 }
 
-.btn-edit, .btn-delete {
-  text-decoration: none;
-  font-size: 14px;
-  padding: 5px 10px;
-  border-radius: 5px;
-}
-
-.btn-edit {
-  background: #ffc107;
-  color: #fff;
-}
-
-.btn-delete {
-  background: #dc3545;
-  color: #fff;
-}
-
-.btn-add {
-  display: block;
-  margin: 20px auto;
-  padding: 10px 20px;
-  background: #28a745;
-  color: white;
-  font-size: 16px;
-  text-decoration: none;
-  border-radius: 5px;
-}
-
-/* Modo Escuro para os cartões de funcionários */
-[data-bs-theme="dark"] .funcionario-card {
-  background: #252525;
-  box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.1);
-  color: #f0f0f0;
-}
-
-[data-bs-theme="dark"] .funcionario-img {
-  border: 3px solid #777;
-}
-
-[data-bs-theme="dark"] .btn-add {
-  background: #0b572d;
-}
-
-[data-bs-theme="dark"] .container {
-  background: #121212;
-}
-
-/* Modo Escuro para o Dashboard */
-[data-bs-theme="dark"] .dashboard {
-  background: #1e1e1e; /* Cinza escuro para um visual sofisticado */
-  color: #e0e0e0; /* Texto mais suave para legibilidade */
-  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1); /* Sombra sutil para destacar */
-  border-radius: 10px; /* Bordas arredondadas para suavizar o design */
-}
-
-/* Elementos internos */
-[data-bs-theme="dark"] .dashboard h1,
-[data-bs-theme="dark"] .dashboard h2,
-[data-bs-theme="dark"] .dashboard h3 {
-  color: #ffffff; /* Destaca os títulos */
-}
-
-[data-bs-theme="dark"] .dashboard p {
-  color: #cccccc; /* Texto equilibrado */
-}
-
-/* Ajuste para botões dentro do dashboard */
-[data-bs-theme="dark"] .dashboard .btn {
-  background: linear-gradient(135deg, #0f9d58, #066c37);
-  color: #fff;
-  border: none;
-}
-
-[data-bs-theme="dark"] .dashboard .btn:hover {
-  background: linear-gradient(135deg, #066c37, #0f9d58);
-  box-shadow: 0px 2px 8px rgba(15, 157, 88, 0.4);
+@media (min-width: 768px) {
+  .bd-placeholder-img-lg {
+    font-size: 3.5rem;
+  }
 }

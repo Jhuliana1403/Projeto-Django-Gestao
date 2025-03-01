@@ -3,40 +3,52 @@
 
 {% block content %}
   <div class="container">
-      <h2 class="title">Lista de Clientes</h2>
-      
-      {% if clientes %}
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Nome</th>
-              <th>Endereço</th>
-              <th>Contato</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for cliente in clientes %}
-                <tr>
-                    <td>{{ cliente.nome }}</td>
-                    <td>{{ cliente.endereco }}</td>
-                    <td>{{ cliente.contato }}</td> 
-                    <td>
-                      <a href="{% url 'editar_cliente' cliente.id %}">
-                        <i class="bi bi-pencil"></i> <!-- Ícone de edição -->
-                      </a>
-                      <a href="{% url 'excluir_cliente' cliente.id %}" onclick="return confirm('Tem certeza que deseja excluir?')">
-                        <i class="bi bi-trash"></i>
-                      </a> 
-                    </td>
-                </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      {% else %}
-        <p class="no-products">Nenhum cliente cadastrado ainda.</p>
-      {% endif %}
-      
-      <a href="{% url 'cadastrar_cliente' %}" class="btn btn-add">+ Adicionar Cliente</a>
+    <h2 class="title">Lista de Clientes</h2>
+
+      <!-- Exibir mensagens de sucesso -->
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+    <script src="{% static 'js/delay_error.js' %}"></script>
+    {% endif %}
+
+    {% if clientes %}
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Endereço</th>
+            <th>Contato</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for cliente in clientes %}
+              <tr>
+                  <td>{{ cliente.nome }}</td>
+                  <td>{{ cliente.endereco }}</td>
+                  <td>{{ cliente.contato }}</td> 
+                  <td>
+                    <a href="{% url 'editar_cliente' cliente.id %}">
+                      <i class="bi bi-pencil"></i> <!-- Ícone de edição -->
+                    </a>
+                    <a href="{% url 'excluir_cliente' cliente.id %}" onclick="return confirm('Tem certeza que deseja excluir?')">
+                      <i class="bi bi-trash"></i>
+                    </a> 
+                  </td>
+              </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p class="no-products">Nenhum cliente cadastrado ainda.</p>
+    {% endif %}
+    
+    <a href="{% url 'cadastrar_cliente' %}" class="btn btn-add">+ Adicionar Cliente</a>
   </div>
 {% endblock %}

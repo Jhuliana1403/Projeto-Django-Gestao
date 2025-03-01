@@ -2,9 +2,21 @@
 {% load static %}
 
 {% block content %}
-  <div class="form-container">
-      <h2 class="form-title">Editar Funcionário</h2>
-      <form method="POST" enctype="multipart/form-data">
+    <div class="form-container">
+        <h2 class="form-title">Editar Funcionário</h2>
+      
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        <script src="{% static 'js/delay_error.js' %}"></script>
+        {% endif %}
+
+        <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="form-group">
             <label for="imagem">Foto Atual:</label><br>
@@ -30,6 +42,6 @@
         </div>
         
         <button type="submit" class="btn-submit">Salvar Alterações</button>
-      </form>
-  </div>
+        </form>
+    </div>
 {% endblock %}

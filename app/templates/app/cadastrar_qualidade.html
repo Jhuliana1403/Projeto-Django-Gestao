@@ -2,46 +2,68 @@
 {% load static %}
 
 {% block content %}
-  <div class="form-container">
-      <h2 class="form-title">Cadastrar Qualidade</h2>
-      <form method="POST">
+    <div class="form-container">
+        <h2 class="form-title">Cadastrar Qualidade</h2>
+
+        <!-- Exibir mensagens de erro ou sucesso -->
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        <script src="{% static 'js/delay_error.js' %}"></script>
+        {% endif %}
+
+        <form method="POST">
         {% csrf_token %}
         <div class="form-group">
-          <label for="produtor">Produtor:</label>
-          <select id="produtor" name="produtor" class="form-control input-large" required>
-              <option value="">Selecione um produtor</option>
-              {% for produtor in produtores %}
-                  <option value="{{ produtor.id }}">{{ produtor.nome }}</option>
-              {% endfor %}
-          </select>
+            <label for="produtor">Produtor:</label>
+            <select id="produtor" name="produtor" class="form-control input-large">
+                <option value="">Selecione um produtor</option>
+                {% for produtor in produtores %}
+                    <option value="{{ produtor.id }}" {% if request.POST.produtor == produtor.id|stringformat:"s" %}selected{% endif %}>
+                        {{ produtor.nome }}
+                    </option>
+                {% endfor %}
+            </select>
 
             <label for="coleta">Coleta:</label>
-            <select id="coleta" name="coleta" required>
+            <select id="coleta" name="coleta">
                 <option value="">Selecione a Coleta</option>
                 {% for coleta in coletas %}
-                    <option value="{{ coleta.id }}">{{ coleta.quantidade_litros}}</option>
+                    <option value="{{ coleta.id }}" {% if request.POST.coleta == coleta.id|stringformat:"s" %}selected{% endif %}>
+                        {{ coleta.quantidade_litros }}
+                    </option>
                 {% endfor %}
             </select>
 
             <label for="gordura">Gordura:</label>
-            <input type="number" id="gordura" name="gordura" class="form-control input-large" placeholder="Digite a porcentagem de gordura" step="0.01" required>
+            <input type="number" id="gordura" name="gordura" class="form-control input-large"
+                placeholder="Digite a porcentagem de gordura" step="0.01"
+                value="{{ request.POST.gordura }}">
 
             <label for="proteina">Proteína:</label>
-            <input type="number" id="proteina" name="proteina" class="form-control input-large" placeholder="Digite a porcentagem de proteina" step="0.01" required>
+            <input type="number" id="proteina" name="proteina" class="form-control input-large"
+                placeholder="Digite a porcentagem de proteína" step="0.01"
+                value="{{ request.POST.proteina }}">
 
             <label for="contagem_bacteriana">Contagem Bacteriana:</label>
-            <input type="number" id="contagem_bacteriana" name="contagem_bacteriana" placeholder="Digite a porcentagem de qualidade" class="form-control" required>
+            <input type="number" id="contagem_bacteriana" name="contagem_bacteriana"
+                placeholder="Digite a porcentagem de qualidade" class="form-control"
+                value="{{ request.POST.contagem_bacteriana }}">
 
             <label for="status">Status:</label>
-            <select id="status" name="status" class="form-control input-large" required>
-              <option value="">Selecione o Status:</option>
-              <option value="Aprovado">Aprovado</option>
-              <option value="Reprovado">Reprovado</option>
-          </select>          
-         </div>
-        
-        <button type="submit" class="btn-submit">Cadastrar Qualidade</button>
-      </form>
-  </div>
+            <select id="status" name="status" class="form-control input-large">
+                <option value="">Selecione o Status:</option>
+                <option value="Aprovado" {% if request.POST.status == "Aprovado" %}selected{% endif %}>Aprovado</option>
+                <option value="Reprovado" {% if request.POST.status == "Reprovado" %}selected{% endif %}>Reprovado</option>
+            </select>
+        </div>
 
+        <button type="submit" class="btn-submit">Cadastrar Qualidade</button>
+        </form>
+    </div>
 {% endblock %}

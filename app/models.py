@@ -64,7 +64,7 @@ class Pagamento(models.Model):
         return f"Pagamento {self.produtor.nome} - R$ {self.valor}"
 
 class Funcionario(models.Model):
-    imagem = models.ImageField(upload_to='funcionarios/', blank=True, null=True)
+    imagem = models.ImageField(upload_to='funcionarios/', null=True, blank=True) 
     nome = models.CharField(max_length=100)
     salario = models.DecimalField(max_digits=10, decimal_places=2)
     funcao = models.CharField(max_length=100)
@@ -82,3 +82,18 @@ class Venda(models.Model):
 
     def __str__(self):
         return f"Venda {self.cliente.nome} - {self.quantidade_litros}L"
+
+class Transporte(models.Model):
+    motorista = models.CharField(max_length=100)
+    placa = models.CharField(max_length=10, unique=True)
+    coleta_quantidade = models.DecimalField(max_digits=10, decimal_places=2)
+    destino = models.CharField(max_length=255)
+    data_envio = models.DateTimeField(auto_now_add=True)
+    data_chegada = models.DateTimeField(blank=True, null=True) 
+    status = models.CharField(max_length=50,choices=[("Em andamento", "Em andamento"), ("Concluído", "Concluído"), ("Atraso", "Atraso")],default="Em andamento")
+    motivo_atraso = models.TextField(blank=True, null=True) 
+    feedback_cliente = models.TextField(blank=True, null=True) 
+    ativo = models.BooleanField(default=True)
+
+    def __str__(self):
+        return f"Transporte {self.motorista} - {self.placa} - {self.status}"

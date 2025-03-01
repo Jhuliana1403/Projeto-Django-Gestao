@@ -2,34 +2,47 @@
 {% load static %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static "css/funcionario.css" %}">
+<link rel="stylesheet" href="{% static 'css/funcionario.css' %}">
 <div class="container">
     <h2 class="title">Funcionários</h2>
-
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+    <script src="{% static 'js/delay_error.js' %}"></script>
+    {% endif %}
     {% if funcionarios %}
         <div class="funcionarios-grid">
             {% for funcionario in funcionarios %}
                 <div class="funcionario-card">
-                    <img src="{{ funcionario.imagem.url }}" alt="{{ funcionario.nome }}" class="funcionario-img">
+                    {% if funcionario.imagem %}
+                        <img src="{{ funcionario.imagem.url }}" alt="{{ funcionario.nome }}" class="funcionario-img">
+                    {% else %}
+                        <img src="{% static 'images/default-avatar.png' %}" alt="{{ funcionario.nome }}" class="funcionario-img">
+                    {% endif %}
                     <div class="funcionario-info">
                         <h3>{{ funcionario.nome }}</h3>
-                        <p>💰 {{ funcionario.salario }}</p>
-                        <p>📌 {{ funcionario.funcao }}</p>
+                        <p><i class="bi bi-currency-dollar"></i> {{ funcionario.salario }}</p>
+                        <p><i class="bi bi-briefcase"></i> {{ funcionario.funcao }}</p>
                         <p>
                             <a href="{% url 'alternar_status_funcionario' funcionario.id %}" class="status-toggle">
                                 {% if funcionario.ativo %}
-                                    <span class="status-indicator status-active"></span> Ativo
+                                    <i class="bi bi-check-circle text-success"></i> Ativo
                                 {% else %}
-                                    <span class="status-indicator status-inactive"></span> Inativo
+                                    <i class="bi bi-x-circle text-danger"></i> Inativo
                                 {% endif %}
                             </a>
                         </p>
                         <div class="funcionario-acoes">
-                            <a href="{% url 'editar_funcionario' funcionario.id %}" class="btn-edit">
-                                ✏️ Editar
+                            <a href="{% url 'editar_funcionario' funcionario.id %}">
+                                <i class="bi bi-pencil text-primary"></i> 
                             </a>
-                            <a href="{% url 'excluir_funcionario' funcionario.id %}" onclick="return confirm('Tem certeza que deseja excluir?')" class="btn-delete">
-                                🗑️ Excluir
+                            <a href="{% url 'excluir_funcionario' funcionario.id %}" onclick="return confirm('Tem certeza que deseja excluir?')">
+                                <i class="bi bi-trash text-danger"></i>
                             </a>
                         </div>
                     </div>

@@ -29,7 +29,7 @@ urlpatterns = [
 
     # Rotas para Qualidade 
     path('qualidade_leite/', views.listar_qualidade, name='listar_qualidade'),
-    path('adicionar_qualidade/', views.adicionar_qualidade, name='adicionar_qualidade'),
+    path('adicionar_qualidade/', views.cadastrar_qualidade, name='adicionar_qualidade'),
     path('editar_qualidade/<int:qualidade_id>/', views.editar_qualidade, name='editar_qualidade'),
     path('exluir_qualidade/<int:qualidade_id>/', views.excluir_qualidade, name='excluir_qualidade'),
     path('obter_coletas/', views.obter_coletas, name='obter_coletas'),
@@ -53,6 +53,12 @@ urlpatterns = [
     path('cadastrar_venda/', views.cadastrar_venda, name='cadastrar_venda'),
     path('editar_venda/<int:venda_id>/', views.editar_venda, name='editar_venda'),
     path('excluir_venda/<int:venda_id>/', views.excluir_venda, name='excluir_venda'),
+
+    #Rotas para Transporte
+    path('transportes/', views.listar_transporte, name='listar_transporte'),
+    path('cadastrar_transporte/', views.cadastrar_transporte, name="cadastrar_transporte"),
+    path("editar_transporte/<int:transporte_id>/", views.editar_transporte, name="editar_transporte"),
+    path("excluir_transporte/<int:transporte_id>/", views.excluir_transporte, name="excluir_transporte"),
 ]
 
 if settings.DEBUG:

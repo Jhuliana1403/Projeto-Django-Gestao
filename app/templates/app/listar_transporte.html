@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <h2 class="title">Transportes</h2>
+    
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+    <script src="{% static 'js/delay_error.js' %}"></script>
+    {% endif %}
+    
+    {% if transportes %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Motorista</th>
+                    <th>Placa</th>
+                    <th>Coleta</th>
+                    <th>Destino</th>
+                    <th>Data de Saída</th>
+                    <th>Motivo</th>
+                    <th>Feedback</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for transporte in transportes %}
+                <tr>
+                    <td>{{ transporte.motorista }}</td>
+                    <td>{{ transporte.placa }}</td>
+                    <td>{{ transporte.coleta_quantidade }}</td>
+                    <td>{{ transporte.destino }}</td>
+                    <td>{{ transporte.data_envio|date:"d/m/Y" }}</td>
+                    <td>{{ transporte.motivo_atraso }}</td>
+                    <td>{{ transporte.feedback_cliente }}</td>
+                    <td>{{ transporte.status }}</td>
+                    <td>
+                        <a href="{% url 'editar_transporte' transporte.id %}" title="Editar">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                        <a href="{% url 'excluir_transporte' transporte.id %}" title="Excluir" onclick="return confirm('Tem certeza que deseja excluir?')">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="9">Nenhum transporte encontrado.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Nenhum registro de transporte encontrado.</p>
+    {% endif %}
+    
+    <a href="{% url 'cadastrar_transporte' %}" class="btn btn-add">+ Adicionar Transporte</a>
+</div>
+{% endblock %}

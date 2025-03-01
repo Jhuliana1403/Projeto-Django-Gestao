@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <div class="form-container">
+        <h2 class="form-title">Editar Transporte</h2>
+
+        <!-- Exibir mensagens de erro ou sucesso -->
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        <script src="{% static 'js/delay_error.js' %}"></script>
+        {% endif %}
+
+        <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="motorista">Motorista:</label>
+            <input type="text" id="motorista" name="motorista" class="form-control input-large" value="{{ transporte.motorista }}" placeholder="Digite o nome do motorista">
+
+            <label for="placa">Placa:</label>
+            <input type="text" id="placa" name="placa" class="form-control input-large" value="{{ transporte.placa }}" placeholder="Digite a placa do veículo">
+
+            <label for="coleta_quantidade">Coleta:</label>
+            <input type="number" id="coleta_quantidade" name="coleta_quantidade" class="form-control input-large" value="{{ transporte.coleta_quantidade }}" placeholder="Digite a coleta">
+
+            <label for="destino">Destino:</label>
+            <input type="text" id="destino" name="destino" class="form-control input-large" value="{{ transporte.destino }}" placeholder="Digite o destino">
+
+            <label for="data_envio">Data de Envio:</label>
+            <input type="datetime-local" id="data_envio" name="data_envio" class="form-control input-large" value="{{ transporte.data_envio|date:'Y-m-d\TH:i' }}">
+
+            <label for="status">Status:</label>
+            <select id="status" name="status" class="form-control input-large">
+                <option value="Em andamento" {% if transporte.status == "Em andamento" %}selected{% endif %}>Em andamento</option>
+                <option value="Concluído" {% if transporte.status == "Concluído" %}selected{% endif %}>Concluído</option>
+                <option value="Atraso" {% if transporte.status == "Atraso" %}selected{% endif %}>Atraso</option>
+            </select>
+
+            <div id="motivo_atraso_container" style="display: {% if transporte.status == 'Atraso' %}block{% else %}none{% endif %};">
+                <label for="motivo_atraso">Motivo do Atraso:</label>
+                <textarea id="motivo_atraso" name="motivo_atraso" class="form-control input-large" placeholder="Se houver atraso, informe o motivo">{{ transporte.motivo_atraso }}</textarea>
+            </div>
+
+            <label for="feedback_cliente">Feedback do Cliente:</label>
+            <textarea id="feedback_cliente" name="feedback_cliente" class="form-control input-large" placeholder="Informe o feedback do cliente">{{ transporte.feedback_cliente }}</textarea>
+        </div>
+
+        <button type="submit" class="btn-submit">Salvar</button>
+        </form>
+    </div>
+
+  {% block js_extra %}
+    <script src="{% static 'js/cadastro_transporte.js' %}"></script>
+  {% endblock js_extra %}
+{% endblock %}

@@ -2,32 +2,44 @@
 {% load static %}
 
 {% block content %}
-  <div class="form-container">
-      <h2 class="form-title">Cadastrar Funcionário</h2>
-      <form method="POST" enctype="multipart/form-data">
+<div class="form-container">
+    <h2 class="form-title">Cadastrar Funcionário</h2>
+      
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                  {{ message }}
+                </div>
+            {% endfor %}
+      </div>
+      <script src="{% static 'js/delay_error.js' %}"></script>
+    {% endif %}
+
+    <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="form-group">
             <label for="imagem">Foto:</label>
-            <input type="file" id="imagem" name="imagem" class="form-control input-large" required>
+            <input type="file" id="imagem" name="imagem" class="form-control input-large">
 
             <label for="nome">Nome:</label>
-            <input type="text" id="nome" name="nome" class="form-control input-large" placeholder="Digite o nome" required>
+            <input type="text" id="nome" name="nome" class="form-control input-large" placeholder="Digite o nome">
 
             <label for="salario">Salário (R$):</label>
-            <input type="number" id="salario" name="salario" class="form-control input-large" placeholder="Digite o salário" step="0.01" required>
+            <input type="number" id="salario" name="salario" class="form-control input-large" placeholder="Digite o salário" step="0.01">
 
             <label for="funcao">Função:</label>
-            <input type="text" id="funcao" name="funcao" class="form-control input-large" placeholder="Digite a função" required>
+            <input type="text" id="funcao" name="funcao" class="form-control input-large" placeholder="Digite a função">
 
             <label for="status">Status:</label>
-            <select id="status" name="status" class="form-control input-large" required>
+            <select id="status" name="status" class="form-control input-large">
                 <option value="">Selecione o Status:</option>
                 <option value="Ativo">Ativo</option>
                 <option value="Inativo">Inativo</option>
             </select>
         </div>
-        
+
         <button type="submit" class="btn-submit">Cadastrar Funcionário</button>
-      </form>
-  </div>
+    </form>
+</div>
 {% endblock %}

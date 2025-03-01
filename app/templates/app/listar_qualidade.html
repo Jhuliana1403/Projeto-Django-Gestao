@@ -4,7 +4,16 @@
 {% block content %}
 <div class="container">
     <h2 class="title">Qualidade do Leite</h2>
-    
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+    <script src="{% static 'js/delay_error.js' %}"></script>
+    {% endif %}
     {% if qualidade %}
         <table class="table">
             <thead>
@@ -22,16 +31,16 @@
                 {% for q in qualidade %}
                     <tr>
                         <td>{{ q.produtor.nome }}</td>
-                        <td>{{ q.coleta|default:"Não informado" }}</td>
+                        <td>{{ q.coleta.quantidade_litros|default:"Não informado" }}</td>
                         <td>{{ q.gordura }}</td>
                         <td>{{ q.proteina }}</td>
                         <td>{{ q.contagem_bacteriana }}</td>
                         <td>
                             <a href="{% url 'alternar_status_qualidade' q.id %}" class="status-toggle">
-                                {% if q.ativo %}
-                                    <span class="status-indicator status-active"></span> Ativo
+                                {% if q.status == "Aprovado" %}
+                                    <span class="status-indicator status-active"></span> Aprovado
                                 {% else %}
-                                    <span class="status-indicator status-inactive"></span> Inativo
+                                    <span class="status-indicator status-inactive"></span> Reprovado
                                 {% endif %}
                             </a>
                         </td>
