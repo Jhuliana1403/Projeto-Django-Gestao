@@ -70,7 +70,13 @@ def editar_admin(request):
         user.save()
 
         messages.success(request, 'Usuário atualizado com sucesso!')
-        return redirect('editar_admin')  # Redireciona para a mesma página com os dados atualizados
+        return redirect('visualizar_admin')  # Redireciona para a mesma página com os dados atualizados
 
     # Caso o método seja GET, renderizamos o formulário com os dados atuais do usuário
     return render(request, 'login/editar_admin.html', {'user': user})
+
+# Função para visualizar os dados do usuário logado
+@login_required
+def visualizar_admin(request):
+    user = request.user  # Pegando o usuário logado
+    return render(request, 'login/visualizar_admin.html', {'user': user})

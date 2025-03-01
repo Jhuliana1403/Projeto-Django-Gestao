@@ -1,9 +1,10 @@
+{% comment %} {% extends "base.html" %} {% endcomment %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/login.css' %}">
 </head>
 <body>
     <div class="login-container">
-        <h2>Editar Dados do Administrador</h2>
+        <h1>Editar Dados do Administrador</h2>
 
         {% if messages %}
             {% for message in messages %}
@@ -34,6 +35,7 @@
             </div>
 
             <button type="submit" class="btn">Salvar Alterações</button>
+            <a href="{% url "visualizar_admin" %}" class="link">Voltar</a>
         </form>
     </div>
 </body>
