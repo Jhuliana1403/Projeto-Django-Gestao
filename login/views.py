@@ -10,6 +10,7 @@ from .forms import AdminCreationForm
 
 #Tela de login 
 def index(request):
+    print("Usuário logado:", request.user.is_authenticated)  # Verifica se a sessão ainda existe
     if request.method == "GET":
         return render(request, 'login/index.html')
     else:        
@@ -20,7 +21,8 @@ def index(request):
 
         if user:
             login(request, user)
-            return render(request, 'app/dashboard.html')
+            request.session.set_expiry(86400)  # Mantém a sessão por 1 dia
+            return redirect('dashboard')
         else:
             return render(request, "login/index.html", {"erro": "Email ou senha incorreto!"})
         
