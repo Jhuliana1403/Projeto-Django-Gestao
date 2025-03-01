@@ -1,0 +1,28 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+<body>
+    <div class="login-container">
+        <img src="{% static 'img/logo-login.png' %}" style="width: 350px; height: auto;">
+
+        {% if erro %}
+            <p style="color: red;">{{ erro }}</p>
+        {% endif %}
+
+        <form action="{% url "login_index" %}" method="POST"> 
+            {% csrf_token %}
+            <div class="form-control">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Digite seu email" required>
+            </div>
+            <div class="form-control">
+                <label for="password">Senha</label>
+                <input type="password" id="password" name="password" placeholder="Digite sua senha" required>
+            </div>
+            <button type="submit" class="btn">Acessar</button>
+            {% comment %} <a href="#" class="link">Esqueceu sua senha?</a> {% endcomment %}
+        </form>
+    </div>
+</body>
+</html>

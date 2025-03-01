@@ -26,20 +26,26 @@
 </svg>
 
 <body>
-
     <div class="sidebar">
-           <img src="{% static 'img/logo.png' %}" alt="Logo" width="200" height="80" class="logo">
+        <img src="{% static 'img/logo.png' %}" alt="Logo" width="200" height="80" class="logo">
         <hr>
-        <a href="#" class="d-flex align-items-center text-white text-decoration-none" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="{% static "img/usuario.png" %}" alt="" width="50" height="50" class="rounded-circle me-2">
-            <strong>Usuário</strong>
-        </a>
+            <div class="dropdown">
+                <a href="#" class="d-flex align-items-center text-white text-decoration-none" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="{% static "img/usuario.png" %}" alt="" width="50" height="50" class="rounded-circle me-2">
+                    <strong>{{ request.user.first_name }}</strong>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+                    <li><a class="dropdown-item" href="{% url "visualizar_admin" %}">Configurações</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="{% url "logout" %}">Sair</a></li>
+                </ul>
+            </div>
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">
             <li>
                 <a href="{% url "dashboard" %}" class="nav-link text-white">
                     <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#produtos"/></svg>
-                    Produtores
+                    Dashboard
                 </a>
             </li>
             <li>
@@ -85,12 +91,15 @@
                 </a>
             </li>
             <li>
+                <a href="{% url 'cadastrar_admin' %}" class="nav-link text-white">
+                    <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
+                    Novo Administrador
+                </a>
+            </li>
         </ul>
         <button id="theme-toggle">
            <svg id="theme-icon" width="24" height="24" fill="currentColor"></svg>
         </button>
     </div>
-</div>
-
-<div class="b-example-divider b-example-vr"></div>
+    <div class="b-example-divider b-example-vr"></div>
 </body>
